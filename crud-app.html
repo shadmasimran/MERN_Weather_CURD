@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Posts Manager — CRUD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --dusk:#16213A;
+    --dusk-deep:#0D1526;
+    --parchment:#F4EDE1;
+    --amber:#E8935A;
+    --cyan:#7FB8C4;
+    --danger:#E06A6A;
+    --line: rgba(244,237,225,0.18);
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(ellipse at top, #1E2D4D 0%, var(--dusk) 45%, var(--dusk-deep) 100%);
+    font-family:'Inter', sans-serif;
+    color:var(--parchment);
+    display:flex;
+    justify-content:center;
+    padding:56px 24px;
+  }
+
+  .page{ width:100%; max-width:720px; }
+
+  .masthead{ text-align:center; margin-bottom:36px; }
+
+  .masthead h1{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:2rem;
+    margin:0 0 6px;
+  }
+
+  .masthead p{ margin:0; font-size:0.9rem; color:var(--cyan); }
+
+  /* ---------- form ---------- */
+  .editor{
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:22px;
+    margin-bottom:32px;
+  }
+
+  .editor h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:1.1rem;
+    margin:0 0 16px;
+  }
+
+  .field{ margin-bottom:14px; }
+
+  .field label{
+    display:block;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:rgba(244,237,225,0.5);
+    margin-bottom:6px;
+  }
+
+  .field input, .field textarea{
+    width:100%;
+    background:transparent;
+    border:1px solid var(--line);
+    border-radius:2px;
+    padding:12px 14px;
+    font-family:'Inter', sans-serif;
+    font-size:0.95rem;
+    color:var(--parchment);
+    outline:none;
+    transition:border-color 0.2s ease;
+    resize:vertical;
+  }
+
+  .field textarea{ min-height:88px; }
+
+  .field input:focus, .field textarea:focus{ border-color:var(--amber); }
+
+  .actions{ display:flex; gap:10px; margin-top:6px; }
+
+  button{
+    font-family:'Inter', sans-serif;
+    font-weight:600;
+    font-size:0.9rem;
+    border:none;
+    border-radius:2px;
+    padding:12px 22px;
+    cursor:pointer;
+    transition:transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+  }
+
+  button:active{ transform:scale(0.97); }
+
+  .btn-primary{ background:var(--amber); color:var(--dusk-deep); }
+  .btn-primary:hover{ background:#F0A66E; }
+
+  .btn-ghost{
+    background:transparent;
+    color:var(--parchment);
+    border:1px solid var(--line);
+  }
+  .btn-ghost:hover{ border-color:var(--cyan); }
+
+  /* ---------- toolbar ---------- */
+  .toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    border-bottom:1px solid var(--line);
+    padding-bottom:12px;
+    margin-bottom:20px;
+  }
+
+  .toolbar h2{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:1.3rem;
+    margin:0;
+  }
+
+  .toolbar .count{ font-size:0.8rem; color:var(--cyan); }
+
+  /* ---------- list ---------- */
+  .post{
+    border-bottom:1px solid var(--line);
+    padding:18px 0;
+    animation: rise 0.35s ease;
+  }
+
+  @keyframes rise{
+    from{opacity:0; transform:translateY(8px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  .post .head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:16px;
+  }
+
+  .post h4{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:1.05rem;
+    margin:0 0 6px;
+    line-height:1.35;
+  }
+
+  .post .body{
+    font-size:0.88rem;
+    color:rgba(244,237,225,0.65);
+    line-height:1.55;
+    margin:0;
+  }
+
+  .post .id{
+    font-size:0.7rem;
+    color:rgba(244,237,225,0.4);
+    margin-bottom:4px;
+  }
+
+  .row-actions{ display:flex; gap:8px; flex-shrink:0; }
+
+  .icon-btn{
+    background:transparent;
+    border:1px solid var(--line);
+    color:rgba(244,237,225,0.75);
+    padding:7px 13px;
+    font-size:0.78rem;
+    font-weight:500;
+  }
+
+  .icon-btn:hover{ border-color:var(--cyan); color:var(--parchment); }
+  .icon-btn.delete:hover{ border-color:var(--danger); color:var(--danger); }
+
+  .status{
+    text-align:center;
+    padding:28px 0;
+    font-size:0.9rem;
+    color:rgba(244,237,225,0.6);
+  }
+
+  .status.error{ color:var(--danger); }
+
+  .note{
+    margin-top:28px;
+    font-size:0.75rem;
+    color:rgba(244,237,225,0.4);
+    line-height:1.6;
+    border-top:1px solid var(--line);
+    padding-top:16px;
+  }
+
+  @media (max-width:520px){
+    .post .head{ flex-direction:column; }
+    .row-actions{ margin-top:10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="masthead">
+    <h1>Posts Manager</h1>
+    <p>CRUD operations using the JSONPlaceholder API</p>
+  </div>
+
+  <!-- CREATE / UPDATE form -->
+  <div class="editor">
+    <h3 id="editorTitle">Create a new post</h3>
+
+    <div class="field">
+      <label for="titleInput">Title</label>
+      <input type="text" id="titleInput" placeholder="Enter post title…">
+    </div>
+
+    <div class="field"> 
+      <label for="bodyInput">Body</label>
+      <textarea id="bodyInput" placeholder="Write the post content…"></textarea>
+    </div>
+
+    <div class="actions">
+      <button class="btn-primary" id="saveBtn">Create Post</button>
+      <button class="btn-ghost" id="cancelBtn" style="display:none;">Cancel</button>
+    </div>
+  </div>
+
+  <!-- READ list -->
+  <div class="toolbar">
+    <h2>All Posts</h2>
+    <span class="count" id="count">—</span>
+  </div>
+
+  <div id="status" class="status">Loading posts…</div>
+  <div id="list"></div>
+
+</div>
+
+<script>
+  const API = 'https://jsonplaceholder.typicode.com/posts';
+
+  const titleInput   = document.getElementById('titleInput');
+  const bodyInput    = document.getElementById('bodyInput');
+  const saveBtn      = document.getElementById('saveBtn');
+  const cancelBtn    = document.getElementById('cancelBtn');
+  const editorTitle  = document.getElementById('editorTitle');
+  const listEl       = document.getElementById('list');
+  const statusEl     = document.getElementById('status');
+  const countEl      = document.getElementById('count');
+
+  let posts = [];        // local copy of the data
+  let editingId = null;  // null = create mode, number = edit mode
+
+  function setStatus(msg, isError = false){
+    statusEl.textContent = msg;
+    statusEl.className = 'status' + (isError ? ' error' : '');
+    statusEl.style.display = msg ? 'block' : 'none';
+  }
+
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  /* ---------- RENDER ---------- */
+  function render(){
+    countEl.textContent = posts.length + ' post' + (posts.length === 1 ? '' : 's');
+
+    if(posts.length === 0){
+      listEl.innerHTML = '';
+      setStatus('No posts to show.');
+      return;
+    }
+
+    setStatus('');
+    listEl.innerHTML = posts.map(p => `
+      <div class="post">
+        <div class="head">
+          <div>
+            <div class="id">ID ${p.id}</div>
+            <h4>${escapeHtml(p.title)}</h4>
+            <p class="body">${escapeHtml(p.body)}</p>
+          </div>
+          <div class="row-actions">
+            <button class="icon-btn" data-edit="${p.id}">Edit</button>
+            <button class="icon-btn delete" data-delete="${p.id}">Delete</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  /* ---------- READ (GET) ---------- */
+  async function loadPosts(){
+    setStatus('Loading posts…');
+    try{
+      // _limit keeps the demo list manageable
+      const res = await fetch(`${API}?_limit=10`);
+      if(!res.ok) throw new Error('Failed to load posts');
+      posts = await res.json();
+      render();
+    }catch(err){
+      setStatus(err.message || 'Could not load posts.', true);
+    }
+  }
+
+  /* ---------- CREATE (POST) ---------- */
+  async function createPost(title, body){
+    const res = await fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, body, userId: 1 })
+    });
+    if(!res.ok) throw new Error('Failed to create post');
+    const created = await res.json();
+    // API always returns id 101 for new posts, so generate a unique local id
+    created.id = posts.length ? Math.max(...posts.map(p => p.id)) + 1 : 1;
+    posts.unshift(created);
+    render();
+  }
+
+  /* ---------- UPDATE (PUT) ---------- */
+  async function updatePost(id, title, body){
+    const res = await fetch(`${API}/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, title, body, userId: 1 })
+    });
+    if(!res.ok) throw new Error('Failed to update post');
+    const updated = await res.json();
+    posts = posts.map(p => p.id === id ? { ...p, ...updated, id } : p);
+    render();
+  }
+
+  /* ---------- DELETE ---------- */
+  async function deletePost(id){
+    const res = await fetch(`${API}/${id}`, { method: 'DELETE' });
+    if(!res.ok) throw new Error('Failed to delete post');
+    posts = posts.filter(p => p.id !== id);
+    render();
+  }
+
+  /* ---------- form mode helpers ---------- */
+  function enterEditMode(post){
+    editingId = post.id;
+    titleInput.value = post.title;
+    bodyInput.value = post.body;
+    editorTitle.textContent = `Editing post #${post.id}`;
+    saveBtn.textContent = 'Update Post';
+    cancelBtn.style.display = 'inline-block';
+    titleInput.focus();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function resetForm(){
+    editingId = null;
+    titleInput.value = '';
+    bodyInput.value = '';
+    editorTitle.textContent = 'Create a new post';
+    saveBtn.textContent = 'Create Post';
+    cancelBtn.style.display = 'none';
+  }
+
+  /* ---------- events ---------- */
+  saveBtn.addEventListener('click', async () => {
+    const title = titleInput.value.trim();
+    const body  = bodyInput.value.trim();
+
+    if(!title || !body){
+      setStatus('Both title and body are required.', true);
+      return;
+    }
+
+    saveBtn.disabled = true;
+    saveBtn.textContent = editingId ? 'Updating…' : 'Creating…';
+
+    try{
+      if(editingId){
+        await updatePost(editingId, title, body);
+      }else{
+        await createPost(title, body);
+      }
+      resetForm();
+    }catch(err){
+      setStatus(err.message || 'Something went wrong.', true);
+    }finally{
+      saveBtn.disabled = false;
+      if(!editingId) saveBtn.textContent = 'Create Post';
+    }
+  });
+
+  cancelBtn.addEventListener('click', resetForm);
+
+  // event delegation for edit / delete buttons
+  listEl.addEventListener('click', async (e) => {
+    const editId   = e.target.getAttribute('data-edit');
+    const deleteId = e.target.getAttribute('data-delete');
+
+    if(editId){
+      const post = posts.find(p => p.id === Number(editId));
+      if(post) enterEditMode(post);
+    }
+
+    if(deleteId){
+      const id = Number(deleteId);
+      if(!confirm(`Delete post #${id}?`)) return;
+      e.target.textContent = 'Deleting…';
+      try{
+        await deletePost(id);
+        if(editingId === id) resetForm();
+      }catch(err){
+        setStatus(err.message || 'Could not delete post.', true);
+      }
+    }
+  });
+
+  // initial load
+  loadPosts();
+</script>
+
+</body>
+</html>

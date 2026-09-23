@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Suxnix - Power Supplement</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+
+<style>
+:root{
+  --green:#2db34a;
+  --dkgreen:#1e9038;
+  --orange:#f5a623;
+  --dark:#111111;
+  --text:#555;
+}
+*{box-sizing:border-box;}
+body{font-family:'Nunito Sans',sans-serif;color:var(--text);overflow-x:hidden;}
+h1,h2,h3,h4,.heading{font-family:'Barlow Condensed',sans-serif;}
+
+/*  NAVBAR  */
+.navbar{background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:10px 0;position:sticky;top:0;z-index:1050;}
+.brand-icon{width:30px;height:30px;background:var(--green);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;}
+.brand-icon i{color:#fff;font-size:.8rem;}
+.brand-name{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:800;color:#222;line-height:1.1;}
+.brand-tagline{font-size:.45rem;letter-spacing:2.5px;color:#aaa;text-transform:uppercase;display:block;font-family:'Nunito Sans',sans-serif;}
+.nav-link{font-size:.8rem;font-weight:700;color:#333!important;padding:0 9px!important;transition:color .2s;}
+.nav-link:hover{color:var(--green)!important;}
+.nav-icons{display:flex;align-items:center;gap:14px;}
+.nav-icons a{color:#333;text-decoration:none;font-size:.95rem;position:relative;transition:color .2s;}
+.nav-icons a:hover{color:var(--green);}
+.cart-count{position:absolute;top:-7px;right:-9px;background:var(--green);color:#fff;font-size:.5rem;width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.grid-icon-btn{background:var(--green);color:#fff!important;width:32px;height:32px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;}
+
+/*  HERO  */
+#hero{background:#fff;padding:50px 0 0;position:relative;overflow:hidden;min-height:85vh;display:flex;align-items:center;}
+.hero-leaf-svg{position:absolute;pointer-events:none;}
+.hero-tag{font-size:.7rem;letter-spacing:3px;color:var(--orange);font-weight:700;text-transform:uppercase;}
+.hero-title{font-size:3.4rem;font-weight:800;color:#111;text-transform:uppercase;line-height:1.05;}
+.btn-orange{background:var(--orange);color:#fff;border:none;border-radius:50px;padding:10px 28px;font-weight:700;font-size:.88rem;cursor:pointer;transition:background .2s;text-decoration:none;display:inline-block;}
+.btn-orange:hover{background:#d4891a;color:#fff;}
+.hero-arch{width:420px;height:210px;background:var(--green);border-radius:50% 50% 0 0/100% 100% 0 0;margin:0 auto;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;position:relative;}
+.hero-arch img{width:100%;height:100%;object-fit:cover;position:absolute;bottom:0;left:0;}
+
+/* brands */
+.brands-bar{border-top:1px solid #eee;padding:16px 0;}
+.brand-separator{display:inline-block;width:28px;height:2px;background:var(--orange);vertical-align:middle;margin:0 8px;}
+.brand-bar-label{font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:#0c0101;}
+.brand-logos{display:flex;align-items:center;justify-content:center;gap:120px;flex-wrap:wrap;margin-top:10px;}
+.brand-logos span{font-family:'Barlow Condensed',sans-serif;font-size:1rem;color:#0a0000;font-weight:700;letter-spacing:1px;}
+
+/*  FEATURES GREEN  */
+.green-section{position:relative;background:var(--green);padding:100px 0 100px;z-index:0;}
+.green-section::before{content:'';position:absolute;top:-55px;left:0;right:0;height:0px;background:var(--green); }
+.green-section::after{content:'';position:absolute;bottom:-55px;left:0;right:0;height:0px;background:var(--green); }
+.feat-icon{font-size:1.9rem;color:var(--orange);margin-bottom:7px;}
+.feat-title{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px;}
+.feat-text{font-size:.8rem;color:rgba(255,255,255,.72);line-height:1.55;}
+.herb-img{width:100%;max-width:320px;border-radius:50%;object-fit:cover;border:6px solid rgba(255,255,255,.25);}
+
+/*  PRODUCTS  */
+.products-sec{padding:80px 0;background:#fff;}
+.prod-name{font-size:1.9rem;font-weight:800;text-transform:uppercase;color:#111;}
+.prod-badge{font-size:.72rem;color:#aaa;text-transform:uppercase;letter-spacing:1px;}
+.prod-desc{font-size:.86rem;color:#666;line-height:1.7;max-width:400px;}
+.price-new{font-size:1.4rem;font-weight:800;color:#111;}
+.price-old{font-size:.95rem;color:var(--orange);text-decoration:line-through;margin-left:6px;}
+.btn-green{background:var(--green);color:#fff;border:none;border-radius:50px;padding:9px 24px;font-weight:700;font-size:.85rem;cursor:pointer;transition:background .2s;}
+.btn-green:hover{background:var(--dkgreen);color:#fff;}
+.dot-bg-wrap{position:relative;min-height:260px;display:flex;align-items:center;justify-content:center;}
+.dot-bg-wrap::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,#ddd 1.5px,transparent 1.5px);background-size:16px 16px;opacity:.55;border-radius:12px;}
+.dot-bg-wrap img{position:relative;z-index:1;max-height:260px;object-fit:contain;}
+
+/*  SHOP CARDS  */
+
+
+.shop-sec{padding:60px 0 70px;background:#fff;}
+.shop-card{background:#fff;border:1px solid #f0f0f0;border-radius:16px;padding:22px 14px 16px;text-align:center;box-shadow:0 3px 16px rgba(0,0,0,.06);transition:transform 0.2s,box-shadow 0.2s;}
+.shop-card:hover{transform:translateY(-5px);box-shadow:0 8px 28px rgba(0,0,0,0.1);}
+.card-green{background:var(--green);color:#fff;border:none;border-radius:50px;padding:9px 24px;font-weight:700;font-size:.85rem;cursor:pointer;transition:background .2s;}
+.card-img-wrap{width:110px;height:110px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.card-img-wrap img{width:80px;height:80px;object-fit:contain;position:relative;z-index:1;}
+.card-circle{position:absolute;inset:0;border-radius:50%;}
+.card-nm{font-family:'Barlow Condensed',sans-serif;font-size:.88rem;font-weight:700;text-transform:uppercase;color:#111;}
+.card-pr{color:var(--green);font-weight:700;font-size:.9rem;}
+.stars{color:var(--orange);font-size:.75rem;}
+.add-btn{width:30px;height:30px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;cursor:pointer;border:none;}
+.add-btn i{color:#fff;font-size:.72rem;}
+.slide-dots{display:flex;gap:6px;justify-content:center;margin-top:20px;}
+.slide-dot{width:8px;height:8px;border-radius:50%;background:#ddd;}
+.slide-dot.on{background:var(--orange);}
+
+/*  VIDEO BANNER  */
+.vid-banner{position:relative;height:100%;width:100%;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#000;padding:300px 0 300px;z-index:0;}
+.vid-banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.38;}
+.vid-banner::before{content:'';position:absolute;top:0;left:0;right:0;height:100px;width:100px;background:#000;}
+.vid-banner::after{content:'';position:absolute;bottom: 100px;left:0;right:0;height:100px;width:100px;background:#000;}
+.play-circle{width:54px;height:54px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:3;cursor:pointer;box-shadow:0 0 0 14px rgba(45,179,74,.18);transition:transform .2s;}
+.play-circle:hover{transform:scale(1.1);}
+.play-circle i{color:#fff;font-size:1.1rem;margin-left:3px;}
+
+/*  STATS  */
+.stats-sec{padding:40px 0;background:#fff;}
+.stat-ring{width:48px;height:48px;border:2px solid var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.stat-ring i{color:var(--orange);font-size:1rem;}
+.stat-num{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;color:#111;line-height:1;}
+.stat-lbl{font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:700;text-transform:uppercase;color:#111;}
+.stat-sub{font-size:.75rem;color:#bbb;}
+
+/*  INGREDIENTS  */
+.ingr-sec{padding:60px 0 70px;background:#fff;}
+.ingr-sup{font-size:.62rem;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-weight:700;}
+.ingr-title-main{font-size:1.9rem;font-weight:800;text-transform:uppercase;color:#111;}
+.hex-wrap{width:58px;height:58px;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0 75%,0 25%);overflow:hidden;flex-shrink:0;background:#eee;}
+.hex-wrap img{width:100%;height:100%;object-fit:cover;}
+.ingr-item-title{font-family:'Barlow Condensed',sans-serif;font-size:.82rem;font-weight:700;text-transform:uppercase;color:#111;}
+.ingr-item-title::before{content:'| ';color:var(--orange);}
+.ingr-item-text{font-size:.78rem;color:#999;line-height:1.5;}
+
+/*  FORMULA  */
+.formula-sec{padding:60px 0;background:#f9f9f9;}
+.formula-lbl{font-size:.62rem;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-weight:700;}
+.formula-h{font-size:2rem;font-weight:800;text-transform:uppercase;color:#111;}
+.btn-sm-green{background:var(--green);color:#fff;border:none;border-radius:50px;padding:8px 20px;font-weight:700;font-size:.8rem;cursor:pointer;transition:background .2s;}
+.btn-sm-green:hover{background:var(--dkgreen);}
+.formula-circle{width:280px;height:280px;border-radius:50%;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.12);}
+.formula-circle img{width:100%;height:100%;object-fit:cover;}
+
+/*  PRICING  */
+.pricing-sec{padding:70px 0;background:#f0f0f0;}
+.pricing-lbl{font-size:.62rem;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-weight:700;}
+.pricing-h{font-size:2rem;font-weight:800;text-transform:uppercase;color:#111;}
+.pc{background:#fff;border-radius:14px;padding:26px 18px;text-align:center;position:relative;border:2px solid transparent;transition:all .2s;}
+.badge-pop{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#555;color:#fff;font-size:.65rem;padding:3px 13px;border-radius:20px;white-space:nowrap;}
+.badge-best{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--orange);color:#fff;font-size:.65rem;padding:3px 13px;border-radius:20px;white-space:nowrap;}
+.pc-sub{font-size:.68rem;color:#aaa;letter-spacing:1px;}
+.pc-name{font-family:'Barlow Condensed',sans-serif;font-size:1.7rem;font-weight:800;color:#111;}
+.pc-img{height:110px;display:flex;align-items:center;justify-content:center;margin:12px 0;}
+.pc-img img{height:100%;object-fit:contain;max-width:100%;border-radius:6px;}
+.pc-price{font-family:'Barlow Condensed',sans-serif;font-size:2.6rem;font-weight:800;color:#111;line-height:1;}
+.pc-per{font-size:.7rem;color:#aaa;}
+.pc-total{font-size:.72rem;color:#aaa;}
+.pc-save{font-size:1rem;font-weight:700;color:var(--orange);}
+.pc-ship{font-size:.75rem;color:var(--orange);}
+.btn-buy{background:var(--orange);color:#fff;border:none;border-radius:7px;width:100%;padding:12px;font-weight:700;font-size:.82rem;cursor:pointer;transition:background .2s;margin-top:12px;}
+.btn-buy:hover{background:#d4891a;}
+.pc-guarantee{font-size:.58rem;color:#ccc;margin-top:5px;}
+
+/*  TESTIMONIALS  */
+.testi-sec{position:relative;background:#111;padding:80px 0;overflow:hidden;}
+.testi-bg-img{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.14;}
+.testi-sec::before{content:'';position:absolute;top:0;left:0;right:0;height:65px;background:#111;
+  clip-path:polygon(0 0,100% 0,100% 50%,78% 100%,55% 20%,32% 90%,10% 30%,0 70%);z-index:1;}
+.testi-sec::after{content:'';position:absolute;bottom:0;left:0;right:0;height:65px;background:#111;
+  clip-path:polygon(0 100%,100% 100%,100% 50%,78% 0,55% 80%,32% 10%,10% 70%,0 30%);z-index:1;}
+.testi-inner{position:relative;z-index:2;}
+.t-stars{color:var(--orange);font-size:1.2rem;letter-spacing:3px;}
+.t-text{font-size:.9rem;color:rgba(255,255,255,.72);line-height:1.8;max-width:620px;margin:14px auto;}
+.t-avatar{width:50px;height:50px;border-radius:50%;overflow:hidden;margin:0 auto 6px;border:2px solid var(--green);}
+.t-avatar img{width:100%;height:100%;object-fit:cover;}
+.t-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#fff;font-size:.95rem;letter-spacing:1px;text-transform:uppercase;}
+.t-nav-btn{width:34px;height:34px;border:1px solid rgba(255,255,255,.18);border-radius:50%;background:transparent;color:rgba(255,255,255,.55);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.t-nav-btn:hover{border-color:var(--green);color:var(--green);}
+.t-dots span{display:inline-block;width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.2);margin:0 3px;}
+.t-dots span.on{background:var(--orange);}
+
+/*  NEWS + FAQ  */
+.news-faq-sec{padding: 70px 0;background:#fff;}
+.news-lbl,.faq-lbl{font-size:.62rem;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-weight:700;}
+.news-h,.faq-h{font-size:2rem;font-weight:800;text-transform:uppercase;color:#111;}
+.news-item{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid #f0f0f0;}
+.news-item:last-child{border-bottom:none;}
+.news-thumb{width:150px;height:150px;border-radius:8px;overflow:hidden;flex-shrink:0;}
+.news-thumb img{width:100%;height:100%;object-fit:cover;}
+.news-cat{font-size:.62rem;text-transform:uppercase;color:var(--green);font-weight:700;}
+.news-date{font-size:.62rem;color:#bbb;float:right;}
+.news-hl{font-family:'Barlow Condensed',sans-serif;font-size:.88rem;font-weight:700;color:#111;line-height:1.3;}
+.news-meta{font-size:.7rem;color:#bbb;}
+.news-meta a{color:var(--green);text-decoration:none;}
+.accordion-button{font-family:'Barlow Condensed',sans-serif;font-size:.88rem;font-weight:700;text-transform:uppercase;color:#111;background:#fff;box-shadow:none!important;}
+.accordion-button:not(.collapsed){color:var(--green);background:#fff;}
+.accordion-item{border:1px solid #eee!important;border-radius:8px!important;margin-bottom:7px;overflow:hidden;}
+.faq-n{color:var(--orange);margin-right:6px;}
+
+/*  GALLERY  */
+.swiper-fix{
+      position: relative;
+      height: 100%;
+    }
+
+    .swiper-container{
+      background: #000;
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .swiper {
+      width: 80%;
+      height: 80%;
+    }
+
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #0e0000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .swiper-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }/*
+.swiper-pos{position:relative;padding:80px 0;overflow:hidden;}
+.swiper-strip{display:flex;overflow:hidden; animation:slide 9s ;}
+.swiper-item{flex:1;height:190px;overflow:hidden;}
+.swiper-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.35s,filter 0.35s;filter:grayscale(0.25);}
+.swiper-avatar{width:50px;height:50px;border-radius:50%;overflow:hidden;margin:0 auto 6px;border:2px}
+.swiper-avatar img{width:100%;height:100%;object-fit:cover;}
+.swiper-nav-btn{width:34px;height:34px;border:1px solid rgba(255,255,255,.18);border-radius:50%;background:transparent;color:rgba(255,255,255,.55);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.swiper-item:hover img{transform:scale(1.06);filter:none;}
+.swiper-wrap::before{content:'';position:absolute;top:100;left:100;right:100;height:100px;z-index:2;background:#111; }
+.swiper-wrap::after{content:'';position:absolute;bottom:100;left:100;right:100;height:100px;z-index:2;background:#111;}*/
+
+/*  FOOTER  */
+footer{background:#111;padding:55px 0 26px;}
+.foot-logo{font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:800;color:#fff;}
+.foot-logo span{color:var(--green);}
+.foot-tagline{font-size:.44rem;letter-spacing:2px;color:#555;text-transform:uppercase;font-family:'Nunito Sans',sans-serif;}
+.foot-desc{font-size:.8rem;color:rgba(255,255,255,.38);line-height:1.7;margin-top:12px;}
+.foot-h{font-family:'Barlow Condensed',sans-serif;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:#fff;margin-bottom:14px;font-weight:700;}
+.foot-links{list-style:none;padding:0;}
+.foot-links li{margin-bottom:8px;}
+.foot-links a{font-size:.8rem;color:rgba(255,255,255,.38);text-decoration:none;transition:color .2s;}
+.foot-links a:hover{color:var(--green);}
+.foot-contact{font-size:.8rem;color:rgba(255,255,255,.38);display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;}
+.foot-contact i{color:var(--green);margin-top:2px;flex-shrink:0;}
+.soc a{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:6px;background:rgba(255,255,255,.07);color:rgba(255,255,255,.45);margin-right:5px;text-decoration:none;font-size:.78rem;transition:all .2s;}
+.soc a:hover{background:var(--green);color:#fff;}
+.foot-btm{border-top:1px solid rgba(255,255,255,.07);padding-top:16px;margin-top:36px;}
+.foot-copy{font-size:.76rem;color:rgba(255,255,255,.2);}
+.pay-chip span{font-size:.62rem;background:rgba(255,255,255,.08);color:rgba(255,255,255,.35);padding:3px 7px;border-radius:3px;margin-left:4px;}
+
+/* back to top */
+#btt{position:fixed;bottom:20px;right:20px;width:40px;height:40px;background:var(--green);color:#fff;border:none;border-radius:50%;font-size:.95rem;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:9999;box-shadow:0 4px 14px rgba(0,0,0,.25);}
+#btt:hover{background:var(--dkgreen);}
+
+/*  RESPONSIVE  */
+@media(max-width:991px){
+  
+  
+  .hero-title{font-size:2.4rem;}
+  .hero-arch{width:320px;height:160px;}
+  .green-section::before,.green-section::after{display:none;}
+  .green-section{padding:60px 0;}
+}
+@media(max-width:767px){
+  .hero-title{font-size:1.9rem;}
+  .hero-arch{width:260px;height:130px;}
+  #hero{min-height:auto;padding:40px 0 0;}
+  .gal-strip{flex-wrap:wrap;}
+  .gal-item{flex:1 1 33%;}
+  .news-item{flex-direction:column;}
+  .news-thumb{width:100%;height:130px;}
+}
+@media(max-width:480px){
+  .hero-title{font-size:1.6rem;}
+  .hero-arch{width:220px;height:110px;}
+  .brand-logos{gap:14px;}
+  .pc{padding:20px 12px;}
+}
+</style>
+</head>
+<body>
+
+<!--  NAVBAR  -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a href="#" class="d-flex align-items-center gap-2 text-decoration-none">
+      <div class="brand-icon"><i class="fa-solid fa-leaf"></i></div>
+      <div>
+        <div class="brand-name">Suxnix.</div>
+        <span class="brand-tagline">Power Supplement</span>
+      </div>
+    </a>
+    <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navMenu">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+        <li class="nav-item"><a class="nav-link" href="#products">Product</a></li>
+        <li class="nav-item"><a class="nav-link" href="#ingredients">Ingredient</a></li>
+        <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+        <li class="nav-item"><a class="nav-link" href="#shop">Shop</a></li>
+        <li class="nav-item"><a class="nav-link" href="#news">News</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contacts</a></li>
+      </ul>
+    </div>
+    <div class="nav-icons">
+      <a href="#" style="position:relative;"><i class="fa-solid fa-cart-shopping"></i><span class="cart-count">0</span></a>
+      <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+      <a href="#" class="grid-icon-btn"><i class="fa-solid fa-grip"></i></a>
+    </div>
+  </div>
+</nav>
+
+<!--  HERO  -->
+<section id="hero">
+  
+  <!-- Decorative SVG leaves -->
+  <svg class="hero-leaf-svg" style="left:-25px;top:55px;width:145px;opacity:.88;" viewBox="0 0 150 270" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="105" cy="48" rx="52" ry="20" fill="#4caf50" transform="rotate(-42,105,48)"/>
+    <ellipse cx="78" cy="125" rx="48" ry="19" fill="#66bb6a" transform="rotate(-48,78,125)"/>
+    <ellipse cx="95" cy="200" rx="44" ry="17" fill="#81c784" transform="rotate(-36,95,200)"/>
+  </svg>
+  <svg class="hero-leaf-svg" style="right:-18px;top:38px;width:145px;opacity:.88;" viewBox="0 0 150 270" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="45" cy="48" rx="52" ry="20" fill="#4caf50" transform="rotate(42,45,48)"/>
+    <ellipse cx="72" cy="125" rx="48" ry="19" fill="#66bb6a" transform="rotate(48,72,125)"/>
+    <ellipse cx="55" cy="200" rx="44" ry="17" fill="#81c784" transform="rotate(36,55,200)"/>
+  </svg>
+
+  <!-- powder spoon left bottom -->
+  <div style="position:absolute;left:8px;bottom:55px;width:85px;opacity:.65;pointer-events:none;">
+    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=120&auto=format&fit=crop&q=80" alt="" style="width:85px;height:85px;border-radius:50%;object-fit:cover;" onerror="this.style.display='none'"/>
+  </div>
+
+  <!-- small potted plant right bottom -->
+  <div style="position:absolute;right:12px;bottom:65px;width:82px;opacity:.72;pointer-events:none;">
+    <img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=120&auto=format&fit=crop&q=80" alt="" style="width:82px;height:82px;border-radius:50%;object-fit:cover;" onerror="this.style.display='none'"/>
+  </div>
+  <div class="container text-center" style="position:relative;z-index:2;">
+    <p class="hero-tag">.. Increased Energy with Suxnix ..</p>
+    <h1 class="hero-title mt-2 mb-3">Mix Protein Provided Way<br>To Growth</h1>
+    <a href="#shop" class="btn-orange mb-4">Shop Now</a>
+
+    <!-- semicircle arch -->
+    <div class="hero-arch mx-auto">
+      <img src="https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=600&auto=format&fit=crop&q=80" alt="Protein supplements"/>
+    </div>
+  </div>
+</section>
+
+<!--  BRANDS BAR  -->
+<div class="brands-bar">
+  <div class="container text-center">
+    <div class="brand-bar-label">
+      <span class="brand-separator"></span>Perfect Brand Is Featured On<span class="brand-separator"></span>
+    </div>
+    <div class="brand-logos">
+      <span>&#9632; Square</span>
+      <span>Qlik &#9675;</span>
+      <span>&#9632; Square</span>
+      <span style="font-style:italic;">affirm  &#96789;</span>
+      <span>Walmart &#9733;</span>
+      <span style="font-weight:400;">Shopify &#9679;</span>
+      <span style="font-weight:400;">paysafe &#9699;</span>
+    </div>
+  </div>
+</div>
+
+<!--  FEATURES GREEN  -->
+<section id="features" class="green-section">
+  <div class="container" style="position:relative;z-index:2;">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-6">
+        <div class="row g-4">
+          <div class="col-6">
+            <div class="feat-icon"><i class="fa-solid fa-apple-whole"></i></div>
+            <div class="feat-title">Multi Fruits Flavour</div>
+            <p class="feat-text">A thing added to something else in order to complete or enhance it.</p>
+          </div>
+          <div class="col-6">
+            <div class="feat-icon"><i class="fa-solid fa-flask"></i></div>
+            <div class="feat-title">Flower Formula</div>
+            <p class="feat-text">A thing added to something else in order to complete or enhance it.</p>
+          </div>
+          <div class="col-6">
+            <div class="feat-icon"><i class="fa-solid fa-weight-scale"></i></div>
+            <div class="feat-title">Fishbone Diagram</div>
+            <p class="feat-text">A thing added to something else in order to complete or enhance it.</p>
+          </div>
+          <div class="col-6">
+            <div class="feat-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
+            <div class="feat-title">100% Fat Blasting</div>
+            <p class="feat-text">A thing added to something else in order to complete or enhance it.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center">
+        <img src="//suxnix-dev.myshopify.com/cdn/shop/files/features_img_00ec7c4b-95e1-4661-b180-7c2bd4db7ebb.png?v=1736613975" alt="Herb bowl" class="herb-img"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--  PRODUCTS  -->
+<section id="products" class="products-sec">
+  <div class="container">
+
+    <!-- Serious Mass -->
+    <div class="row align-items-center g-5 mb-5 pb-4" style="border-bottom:1px solid #f0f0f0;">
+      <div class="col-lg-5">
+        <div class="dot-bg-wrap rounded-3" style="padding:20px;">
+          <img src="//suxnix-dev.myshopify.com/cdn/shop/files/features_product01.png?v=1736660782" alt="Serious Mass"/>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="prod-badge">High-strength, 5000IU</div>
+        <div class="prod-name">Seriour Mass</div>
+        <p class="prod-desc mt-2">Vitamin D3 supplements are commonly recommended for people at risk for vitamin D deficiency. Low vitamin D levels cause depression, fatigue, and muscle weakness.</p>
+        <div class="d-flex align-items-center gap-3 flex-wrap mt-3">
+          <button class="btn-green">Shop Now</button>
+          <span class="price-new">$89.99</span>
+          <span class="price-old">$117.99</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Protein Whey -->
+    <div class="row align-items-center g-5 mb-5 pb-4" style="border-bottom:1px solid #f0f0f0;">
+      <div class="col-lg-7 order-lg-1 order-2">
+        <div class="prod-badge">High-strength, 4000IU</div>
+        <div class="prod-name">Protein Whey</div>
+        <p class="prod-desc mt-2">Vitamin D3 supplements are commonly recommended for people at risk for vitamin D deficiency. Low vitamin D levels cause depression, fatigue, and muscle weakness.</p>
+        <div class="d-flex align-items-center gap-3 flex-wrap mt-3">
+          <button class="btn-orange" style="border-radius:50px;padding:9px 24px;font-size:.85rem;">Shop Now</button>
+          <span class="price-new">$59.99</span>
+          <span class="price-old">$79.99</span>
+        </div>
+      </div>
+      <div class="col-lg-5 order-lg-2 order-1">
+        <div class="dot-bg-wrap rounded-3" style="padding:20px;">
+          <img src="//suxnix-dev.myshopify.com/cdn/shop/files/features_product02.png?v=1736661941" alt="Protein Whey"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- Max Mass 3XL -->
+    <div class="row align-items-center g-5">
+      <div class="col-lg-5">
+        <div class="dot-bg-wrap rounded-3" style="padding:20px;">
+          <img src="//suxnix-dev.myshopify.com/cdn/shop/files/features_product03.png?v=1736661972" alt="Max Mass 3XL"/>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="prod-badge">High-strength, 4000IU</div>
+        <div class="prod-name">Max Mass 3XL</div>
+        <p class="prod-desc mt-2">Vitamin D3 supplements are commonly recommended for people at risk for vitamin D deficiency. Low vitamin D levels cause depression, fatigue, and muscle weakness.</p>
+        <div class="d-flex align-items-center gap-3 flex-wrap mt-3">
+          <button class="btn-green">Shop Now</button>
+          <span class="price-new">$69.99</span>
+          <span class="price-old">$89.99</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!--  SHOP CARDS  -->
+<section id="shop" class="shop-sec">
+  <div class="container">
+    <div class="row g-3 justify-content-center">
+      <div class="col-6 col-md-3">
+        <div class="shop-card">
+          <div class="card-img-wrap"><div class="card-circle" style="background:#e8f5e9;"></div>
+            <img src="//suxnix-dev.myshopify.com/cdn/shop/files/home_shop_thumb01.png?v=1737721978" alt="Antiaging"/>
+          </div>
+          <div class="card-nm">Antiaging and Longevity</div>
+          <div class="card-pr">Tk 49.99</div>
+          <div class="stars mb-2">★★★★<span style="color:#ddd;">★</span> <span style="font-size:.68rem;color:#aaa;">(30)</span></div>
+          <button class="add-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="shop-card">
+          <div class="card-img-wrap"><div class="card-circle" style="background:#e8eaf6;"></div>
+            <img src="//suxnix-dev.myshopify.com/cdn/shop/files/home_shop_thumb03.png?v=1738166815" alt="Box Full"/>
+          </div>
+          <div class="card-nm">Box Full of Muscles</div>
+          <div class="card-pr">Tk 85.99</div>
+          <div class="stars mb-2">★★★★<span style="color:#ddd;">★</span> <span style="font-size:.68rem;color:#aaa;">(30)</span></div>
+          <button class="add-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="shop-card">
+          <div class="card-img-wrap"><div class="card-circle" style="background:#fce4ec;"></div>
+            <img src="//suxnix-dev.myshopify.com/cdn/shop/files/home_shop_thumb04.png?v=1738166199" alt="Protein Powder"/>
+          </div>
+          <div class="card-nm">Protein Powder 2KG</div>
+          <div class="card-pr">Tk 85.99</div>
+          <div class="stars mb-2">★★★★<span style="color:#ddd;">★</span> <span style="font-size:.68rem;color:#aaa;">(30)</span></div>
+          <button class="add-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="shop-card">
+          <div class="card-img-wrap"><div class="card-circle" style="background:#fff8e1;"></div>
+            <img src="//suxnix-dev.myshopify.com/cdn/shop/files/home_shop_thumb02.png?v=1738166857" alt="Whey Protein"/>
+          </div>
+          <div class="card-nm">Whey Protein Powder</div>
+          <div class="card-pr">Tk 49.99</div>
+          <div class="stars mb-2">★★★★<span style="color:#ddd;">★</span> <span style="font-size:.68rem;color:#aaa;">(30)</span></div>
+          <button class="add-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="slide-dots">
+      <div class="slide-dot on"></div>
+      <div class="slide-dot"></div>
+      <div class="slide-dot"></div>
+    </div>
+  </div>
+</section>
+
+<!--  VIDEO BANNER  -->
+<div class="vid-banner">
+  <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1400&auto=format&fit=crop&q=80" alt="Gym workout"/>
+  <div class="play-circle"><i class="fa-solid fa-play"></i></div>
+</div>
+
+<!--  STATS  -->
+<section class="stats-sec">
+  <div class="container">
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-4 col-sm-4">
+        <div class="d-flex align-items-center gap-3">
+          <div class="stat-ring"><i class="fa-solid fa-users"></i></div>
+          <div>
+            <div class="stat-num">43k+</div>
+            <div class="stat-lbl">Active Members</div>
+            <div class="stat-sub">You are all it snap software</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-4">
+        <div class="d-flex align-items-center gap-3">
+          <div class="stat-ring"><i class="fa-solid fa-box-open"></i></div>
+          <div>
+            <div class="stat-num">90k+</div>
+            <div class="stat-lbl">Products Done</div>
+            <div class="stat-sub">You are all it snap software</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-4">
+        <div class="d-flex align-items-center gap-3">
+          <div class="stat-ring"><i class="fa-solid fa-gift"></i></div>
+          <div>
+            <div class="stat-num">80k+</div>
+            <div class="stat-lbl">Get Rewards</div>
+            <div class="stat-sub">You are all it snap software</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--  INGREDIENTS  -->
+<section id="ingredients" class="ingr-sec">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-5 text-center">
+        <img src="//suxnix-dev.myshopify.com/cdn/shop/files/ingredients_img_935aff4a-681c-4796-b32f-2c04b1334309.png?v=1737135850" alt="Protein Whey" style="max-height:360px;object-fit:contain;width:100%;"/>
+      </div>
+
+      <div class="col-lg-7">
+        <p class="ingr-sup">.. Increased Energy With Suxnix ..</p>
+        <h2 class="ingr-title-main mb-4">Suxnix Ingredients</h2>
+        <div class="row g-3">
+          <div class="col-6">
+            <div class="d-flex gap-3 align-items-start">
+              <div class="hex-wrap"><img src="https://i.pinimg.com/736x/98/b2/98/98b2981d1834b4e4763774a70cb8a70a.jpg" alt=""/></div>
+              <div>
+                <div class="ingr-item-title">Helps You Stick to Your Diet</div>
+                <div class="ingr-item-text">A thing added to something else in order to complete or enhance it.</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-6">
+            <div class="d-flex gap-3 align-items-start">
+              <div class="hex-wrap"><img src="https://i.pinimg.com/1200x/87/16/9f/87169f17116e2a1060d1f0e2e9809c8d.jpg" alt=""/></div>
+              <div>
+                <div class="ingr-item-title">Only 3G Net Carbs in Every Jar</div>
+                <div class="ingr-item-text">A thing added to something else in order to complete or enhance it.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="d-flex gap-3 align-items-start">
+              <div class="hex-wrap"><img src="https://i.pinimg.com/736x/47/bd/fb/47bdfb0b1006d1d1d777ad82025f21ae.jpg" alt=""/></div>
+              <div>
+                <div class="ingr-item-title">Ingredients to Fuel Your Body</div>
+                <div class="ingr-item-text">A thing added to something else in order to complete or enhance it.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="d-flex gap-3 align-items-start">
+              <div class="hex-wrap"><img src="https://i.pinimg.com/1200x/c2/ea/84/c2ea846cbb66bdb1b8db30337f707ab8.jpg" alt=""/></div>
+              <div>
+                <div class="ingr-item-title">Clean Ingredients Only</div>
+                <div class="ingr-item-text">A thing added to something else in order to complete or enhance it.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--  FORMULA -->
+<section class="formula-sec">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-5">
+        <div class="formula-lbl">Suxnix Formula</div>
+        <h2 class="formula-h mb-3">Why We Chose This Formula</h2>
+        <button class="btn-sm-green">Show More</button>
+      </div>
+      <div class="col-lg-7 text-center">
+        <div class="formula-circle mx-auto">
+          <img src="https://i.pinimg.com/736x/ac/2f/8a/ac2f8a539f858b17f20a40e44623c3b1.jpg" alt="Natural ingredients"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--  PRICING  -->
+<section id="pricing" class="pricing-sec">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="pricing-lbl">Suxnix Plans</div>
+      <h2 class="pricing-h">Supplement Packages</h2>
+    </div>
+    <div class="row justify-content-center g-4">
+
+      <!-- Plan 1 -->
+      <div class="col-md-4">
+        <div class="pc h-100">
+          <div class="pc-sub">1 BOTTLE OF</div>
+          <div class="pc-name">SUXNIX</div>
+          <div class="pc-sub">(1 X 250 Veggie Caps Bottle)</div>
+          <div class="pc-img">
+            <img src="//suxnix-dev.myshopify.com/cdn/shop/files/pricing_01.png?v=1737217949" alt="1 bottle"/>
+          </div>
+          <div class="d-flex align-items-baseline justify-content-center gap-2 mb-1">
+            <span class="pc-price">$69</span>
+            <div><div class="pc-per">Per</div><div class="pc-per">Bottle</div></div>
+          </div>
+          <div class="pc-total">($69 TOTAL)</div>
+          <div class="pc-save">SAVE 14%</div>
+          <div class="pc-ship">+ Free Shipping</div>
+          <button class="btn-buy">BUY NOW</button>
+          <div class="pc-guarantee">365 DAY FULL MONEY BACK GUARANTEED</div>
+        </div>
+      </div>
+
+      <!-- Plan 2 -->
+      <div class="col-md-4">
+        <div class="pc pop h-100">
+          <div class="badge-pop">★ MOST POPULAR ★</div>
+          <div class="pc-sub">1 BOTTLE OF</div>
+          <div class="pc-name">SUXNIX</div>
+          <div class="pc-sub">(1 X 250 Veggie Caps Bottle)</div>
+          <div class="pc-img">
+            <img src="//suxnix-dev.myshopify.com/cdn/shop/files/pricing_02.png?v=1737217949" alt="2 bottles"/>
+          </div>
+          <div class="d-flex align-items-baseline justify-content-center gap-2 mb-1">
+            <span class="pc-price">$69</span>
+            <div><div class="pc-per">Per</div><div class="pc-per">Bottle</div></div>
+          </div>
+          <div class="pc-total">($69 TOTAL)</div>
+          <div class="pc-save">SAVE 14%</div>
+          <div class="pc-ship">+ Free Shipping</div>
+          <button class="btn-buy">BUY NOW</button>
+          <div class="pc-guarantee">365 DAY FULL MONEY BACK GUARANTEED</div>
+        </div>
+      </div>
+
+      <!-- Plan 3 -->
+      <div class="col-md-4">
+        <div class="pc best h-100">
+          <div class="badge-best">✓ BEST VALUE</div>
+          <div class="pc-sub">1 BOTTLE OF</div>
+          <div class="pc-name">SUXNIX</div>
+          <div class="pc-sub">(1 X 250 Veggie Caps Bottle)</div>
+          <div class="pc-img">
+            <img src="//suxnix-dev.myshopify.com/cdn/shop/files/pricing_03.png?v=1737217949" alt="3 bottles"/>
+          </div>
+          <div class="d-flex align-items-baseline justify-content-center gap-2 mb-1">
+            <span class="pc-price">$69</span>
+            <div><div class="pc-per">Per</div><div class="pc-per">Bottle</div></div>
+          </div>
+          <div class="pc-total">($69 TOTAL)</div>
+          <div class="pc-save">SAVE 14%</div>
+          <div class="pc-ship">+ Free Shipping</div>
+          <button class="btn-buy green-buy">BUY NOW</button>
+          <div class="pc-guarantee">365 DAY FULL MONEY BACK GUARANTEED</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--  TESTIMONIALS  -->
+<section class="testi-sec">
+  <div class="testi-bg-img" style="background-image:url(https://i.pinimg.com/1200x/72/af/ef/72afef5976adb07d04e6c54fdabeb091.jpg);"></div>
+  <div class="container testi-inner text-center" style="padding-top:30px;padding-bottom:30px;">
+    <div id="tCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text">Becoming more involved in administration within the [MidMichigan] health system over the years, I had been researching options for further education that would assist in this transition and fit my busy schedule.</p>
+          <div class="t-avatar"><img src="https://i.pinimg.com/736x/84/ae/70/84ae70ec72feca192c854d84ce3ff387.jpg" alt="Janeta"/></div>
+          <div class="t-name">Janeta Cooper</div>
+        </div>
+        <div class="carousel-item">
+          <div class="t-stars">★★★★☆</div>
+          <p class="t-text">Suxnix has completely transformed my workout routine. The quality is unmatched and I've seen incredible results in just 8 weeks. Highly recommend to anyone serious about their fitness goals.</p>
+          <div class="t-avatar"><img src="https://i.pinimg.com/736x/f8/07/93/f80793442ad6c7a43a6986431a125810.jpg" alt="Michael"/></div>
+          <div class="t-name">Michael Roberts</div>
+        </div>
+        <div class="carousel-item">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text">The best protein supplement I've ever used. Clean ingredients, great taste, and real results. Fast shipping and excellent customer support makes this a no-brainer purchase.</p>
+          <div class="t-avatar"><img src="https://i.pinimg.com/736x/0c/04/93/0c0493cf3728cbaefc47aebc47f880fe.jpg" alt="Sarah"/></div>
+          <div class="t-name">Sarah Williams</div>
+        </div>
+      </div>
+      <div class="d-flex align-items-center justify-content-center gap-3 mt-4">
+        <button class="t-nav-btn" data-bs-target="#tCarousel" data-bs-slide="prev"><i class="fa-solid fa-arrow-left"></i></button>
+        <div class="t-dots" id="tDots">
+          <span class="on"></span><span></span><span></span>
+        </div>
+        <button class="t-nav-btn" data-bs-target="#tCarousel" data-bs-slide="next"><i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--  NEWS + FAQ  -->
+<section id="news" class="news-faq-sec">
+  <div class="container">
+    <div class="row g-5">
+
+      <!-- NEWS -->
+      <div class="col-lg-6">
+        <div class="news-lbl">Suxnix News</div>
+        <h2 class="news-h mb-4">Latest News</h2>
+        <div class="news-item">
+          <div class="news-thumb"><img src="//suxnix-dev.myshopify.com/cdn/shop/articles/inner_blog_thumb03.jpg?v=1737015386" alt=""/></div>
+          <div style="flex:1;">
+            <div><span class="news-cat">Business</span><span class="news-date">January 14, 2025</span></div>
+            <div class="news-hl">Laeoris Nisi Ut Aliquip Ex Ea Commodo...</div>
+            <div class="news-meta">Posted by - <a href="#">Web Developer</a> &nbsp; <i class="fa-regular fa-envelope"></i> 0 &nbsp; <i class="fa-regular fa-eye"></i> k</div>
+          </div>
+        </div>
+        <div class="news-item">
+          <div class="news-thumb"><img src="//suxnix-dev.myshopify.com/cdn/shop/articles/inner_blog_thumb02.jpg?v=1737015311" alt=""/></div>
+          <div style="flex:1;">
+            <div><span class="news-cat">Business</span><span class="news-date">January 14, 2025</span></div>
+            <div class="news-hl">Adipiscing Elit Sed Do Eiusmod Temp...</div>
+            <div class="news-meta">Posted by - <a href="#">Web Developer</a> &nbsp; <i class="fa-regular fa-envelope"></i> 0 &nbsp; <i class="fa-regular fa-eye"></i> k</div>
+          </div>
+        </div>
+        <div class="news-item">
+          <div class="news-thumb"><img src="//suxnix-dev.myshopify.com/cdn/shop/articles/inner_blog_thumb01.jpg?v=1737015111" alt=""/></div>
+          <div style="flex:1;">
+            <div><span class="news-cat">Design</span><span class="news-date">January 14, 2025</span></div>
+            <div class="news-hl">Lorem Ipsum Dolor Sit Amet Consecte...</div>
+            <div class="news-meta">Posted by - <a href="#">Web Developer</a> &nbsp; <i class="fa-regular fa-envelope"></i> 0 &nbsp; <i class="fa-regular fa-eye"></i> k</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="col-lg-6">
+        <div class="faq-lbl">Common Questions</div>
+        <h2 class="faq-h mb-4">Frequently Asked Questions</h2>
+        <div class="accordion" id="faqAcc">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#q1">
+                <span class="faq-n">01.</span> Suxnix Ingredients Provides a Searchable ?
+              </button>
+            </h2>
+            <div id="q1" class="accordion-collapse collapse show" data-bs-parent="#faqAcc">
+              <div class="accordion-body" style="font-size:.82rem;color:#666;line-height:1.6;">There are many variations of passages of lorem ipsum that available but the majority have alteration in some form by injected humour. There are many variations of passages.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q2">
+                <span class="faq-n">02.</span> How to Edit Suxnix Themes ?
+              </button>
+            </h2>
+            <div id="q2" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+              <div class="accordion-body" style="font-size:.82rem;color:#666;line-height:1.6;"> thing added to something else in order to complete or enhance it. There are many variations of passages of lorem ipsum that are available.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q3">
+                <span class="faq-n">03.</span> Suxnix App is a Powerful Application ?
+              </button>
+            </h2>
+            <div id="q3" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+              <div class="accordion-body" style="font-size:.82rem;color:#666;line-height:1.6;">A thing added to something else in order to complete or enhance it. There are many variations of passages of lorem ipsum that are available.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q4">
+                <span class="faq-n">04.</span> Latest Version Thorough Suxnix Powerful ?
+              </button>
+            </h2>
+            <div id="q4" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+              <div class="accordion-body" style="font-size:.82rem;color:#666;line-height:1.6;">A thing added to something else in order to complete or enhance it. There are many variations of passages of lorem ipsum that are available.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q5">
+                <span class="faq-n">05.</span> How to Track My Order ?
+              </button>
+            </h2>
+            <div id="q5" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+              <div class="accordion-body" style="font-size:.82rem;color:#666;line-height:1.6;">A thing added to something else in order to complete or enhance it. There are many variations of passages of lorem ipsum that are available.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--  GALLERY STRIP  -->
+<!-- <div class="gal-wrap">
+  <div class="gal-strip">
+    <div class="gal-item"><img src="https://i.pinimg.com/1200x/04/e9/74/04e9742de5a86369bab8ba8eba6db776.jpg" alt="Gym"/></div>
+    <div class="gal-item"><img src="https://i.pinimg.com/1200x/7e/b3/c5/7eb3c5b496e93c9aaa91d3915b584291.jpg" alt="Gym"/></div>
+    <div class="gal-item"><img src="https://i.pinimg.com/736x/b1/e9/c8/b1e9c85112657ed9c8cbcc9a87fb4d38.jpg" alt="Gym"/></div>
+    <div class="gal-item"><img src="https://i.pinimg.com/736x/55/21/9c/55219c8309c5ed369d81a4f7e30cdb84.jpg" alt="Gym"/></div>
+    <div class="gal-item"><img src="https://i.pinimg.com/736x/98/b2/98/98b2981d1834b4e4763774a70cb8a70a.jpg" alt="Gym"/></div>-->
+    <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="//suxnix-dev.myshopify.com/cdn/shop/files/instagram_post06_ec34de05-56ce-4943-96eb-fdbc6f239030.jpg?v=1737134471" alt="Slide 1"/></div>
+      <div class="swiper-slide"><img src="//suxnix-dev.myshopify.com/cdn/shop/files/instagram_post01_e129213d-f718-4e47-a5f4-d6ec8f7ab64d.jpg?v=1737134057" alt="Slide 2"/></div>
+      <div class="swiper-slide"><img src="//suxnix-dev.myshopify.com/cdn/shop/files/instagram_post02_a85b661a-67ea-4a36-ad29-c9e84ee797ae.jpg?v=1737134121" alt="Slide 3"/></div>
+      <div class="swiper-slide"><img src="//suxnix-dev.myshopify.com/cdn/shop/files/instagram_post03_8902567f-4641-4a0d-8a5d-d9ab44870ead.jpg?v=1737134471" alt="Slide 4"/></div>
+      <div class="swiper-slide"><img src="//suxnix-dev.myshopify.com/cdn/shop/files/instagram_post04_f36edf63-f2ee-407c-ad8f-24edd6fcf69d.jpg?v=1737134471" alt="Slide 5"/></div>
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+
+<!--  FOOTER  -->
+<footer id="contact">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-3 col-md-6">
+        <div class="d-flex align-items-center gap-2 mb-1">
+          <div class="brand-icon"><i class="fa-solid fa-leaf"></i></div>
+          <div>
+            <div class="foot-logo">Suxnix<span>.</span></div>
+            <div class="foot-tagline">Power Supplement</div>
+          </div>
+        </div>
+        <p class="foot-desc">Making beauty especially relating complot especial common questions tend to recur through posts or queries standards vary orem donor command tei.</p>
+        <div class="soc mt-3">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-pinterest-p"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-2 col-6">
+        <div class="foot-h">About Us</div>
+        <ul class="foot-links">
+          <li><a href="#">Shop</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Blogs</a></li>
+          <li><a href="#">Product</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-6">
+        <div class="foot-h">Support</div>
+        <ul class="foot-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Blogs</a></li>
+          <li><a href="#">Blog Post</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="foot-h">Contact Us</div>
+        <div class="foot-contact"><i class="fa-solid fa-location-dot"></i><span>4140 Parker Rd. Allentown, New Mexico 31134</span></div>
+        <div class="foot-contact"><i class="fa-solid fa-phone"></i><span>+1 31-6555-0116</span></div>
+        <div class="foot-contact"><i class="fa-solid fa-envelope"></i><span>Suxnix@example.com</span></div>
+        <div class="foot-contact"><i class="fa-solid fa-globe"></i><span>www.suxnixdomain.com</span></div>
+      </div>
+    </div>
+    <div class="foot-btm d-flex flex-wrap justify-content-between align-items-center">
+      <p class="foot-copy mb-0">Copyright &copy; 2025 Suxnix All Rights Reserved.</p>
+      <div class="pay-chip"><span>VISA</span><span>MC</span><span>AMEX</span><span>PAYPAL</span><span>STRIPE</span></div>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fa-solid fa-chevron-up"></i></button>
+
+</body>
+</html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+<script>
+    var swiper = new Swiper(".mySwiper", {
+      slidesPerView: 4,
+      spaceBetween: 0,
+      centeredSlides: true,
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+    
+    });
+  </script>
+
+
+<script>
+  // Back to top
+  window.addEventListener('scroll',()=>{
+    document.getElementById('btt').style.display = window.scrollY>300?'flex':'none';
+  });
+
+  // Testimonial dot sync
+  const tCar = document.getElementById('tCarousel');
+  const tDots = document.querySelectorAll('#tDots span');
+  if(tCar){
+    tCar.addEventListener('slid.bs.carousel', e=>{
+      tDots.forEach(d=>d.classList.remove('on'));
+      tDots[e.to].classList.add('on');
+    });
+  }
+</script>

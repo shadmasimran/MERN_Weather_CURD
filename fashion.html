@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecomus — Fashion Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+<style>
+  :root{
+    --clr-ink:#141414;
+    --clr-cream:#f7f4ee;
+    --clr-line:#e7e3da;
+    --clr-accent:#c1440e;
+    --clr-muted:#7a7568;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:'Jost',sans-serif;
+    color:var(--clr-ink);
+    background:#fff;
+  }
+  /* Every image below points to a placeholder for now — swap the src on
+     each one (search "IMAGE:" comments, or edit PRODUCTS/LOOKS in the script)
+     to use your own pictures. Background keeps the box visible while loading. */
+  img{background:#efece3;}
+  h1,h2,h3,h4,.display-font{font-family:'Jost',sans-serif; letter-spacing:-0.02em;}
+  a{text-decoration:none; color:inherit;}
+  .btn-ink{background:var(--clr-ink); color:#fff; border-radius:0; padding:.85rem 1.8rem; font-weight:500; letter-spacing:.02em; transition:.25s;}
+  .btn-ink:hover{background:var(--clr-accent); color:#fff;}
+  .btn-outline-ink{background:transparent;border:1px solid var(--clr-ink);color:var(--clr-ink);border-radius:0;padding:.7rem 1.6rem;transition:.25s;}
+  .btn-outline-ink:hover{background:var(--clr-ink);color:#fff;}
+
+  /* ===== Topbar ===== */
+  .topbar{font-size:.82rem; border-bottom:1px solid var(--clr-line);}
+  .topbar .social-icon{width:30px;height:30px;border-radius:50%;border:1px solid #ddd;display:inline-flex;align-items:center;justify-content:center;margin-right:4px;font-size:.8rem;color:var(--clr-ink);}
+
+  /* ===== Navbar ===== */
+  .navbar-ecomus{border-bottom:1px solid var(--clr-line);}
+  .brand-logo{font-size:1.6rem;font-weight:700;letter-spacing:-0.03em;}
+  .nav-link-ecomus{font-weight:500;color:var(--clr-ink)!important;padding:1.4rem .9rem!important;position:relative;}
+  .icon-btn{background:none;border:none;font-size:1.05rem;color:var(--clr-ink);position:relative;padding:.4rem .55rem;}
+  .icon-btn .badge-count{position:absolute;top:-2px;right:-2px;background:var(--clr-accent);color:#fff;font-size:.62rem;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+
+  /* Mega menu */
+  .mega-menu{position:absolute;left:0;top:100%;width:100%;background:#fff;border-top:1px solid var(--clr-line);box-shadow:0 20px 40px rgba(0,0,0,.08);
+    opacity:0;visibility:hidden;transform:translateY(8px);transition:.2s;z-index:1050;padding:2rem 0;}
+  .nav-item-mega:hover .mega-menu,.nav-item-mega:focus-within .mega-menu{opacity:1;visibility:visible;transform:translateY(0);}
+  .mega-menu h6{font-weight:600;font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.9rem;}
+  .mega-menu .mega-link{display:block;padding:.3rem 0;color:var(--clr-muted);font-size:.92rem;transition:.15s;}
+  .mega-menu .mega-link:hover{color:var(--clr-accent);padding-left:4px;}
+  .mega-thumb{border-radius:4px;overflow:hidden;position:relative;}
+  .mega-thumb img{transition:.4s;}
+  .mega-thumb:hover img{transform:scale(1.06);}
+  .mega-thumb .mega-cap{position:absolute;bottom:10px;left:10px;background:#fff;padding:.3rem .7rem;font-size:.8rem;font-weight:500;}
+
+  /* ===== Hero ===== */
+  .hero{background:var(--clr-cream);position:relative;overflow:hidden;}
+  .hero h1{font-size:clamp(2.6rem,6vw,4.6rem);line-height:1.02;font-weight:600;}
+  .hero-img{object-fit:cover;height:100%;width:100%;max-height:700px;}
+
+  /* ===== marquee ===== */
+  .marquee-wrap{background:#fdf9b8;overflow:hidden;white-space:nowrap;padding:.8rem 0;border-top:1px solid #000;border-bottom:1px solid #000;}
+  .marquee-track{display:inline-block;animation:scroll-left 18s linear infinite;font-weight:600;}
+  .marquee-track span{margin:0 2rem;}
+  @keyframes scroll-left{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+  /* ===== category cards ===== */
+  .cat-card{position:relative;overflow:hidden;border-radius:10px;cursor:pointer;display:block;}
+  .cat-card img{width:100%;height:340px;object-fit:cover;transition:.5s ease;}
+  .cat-card:hover img{transform:scale(1.08);}
+  .cat-label{position:absolute;bottom:16px;left:16px;background:#fff;padding:.5rem 1.1rem;font-weight:600;font-size:.95rem;}
+  .cat-card-empty{border:1px solid var(--clr-line);border-radius:10px;height:340px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#fafaf7;}
+  .cat-arrow-btn{width:52px;height:52px;border-radius:50%;border:1px solid var(--clr-ink);display:flex;align-items:center;justify-content:center;}
+
+  /* ===== product cards ===== */
+  .product-card{position:relative;}
+  .product-thumb{position:relative;overflow:hidden;border-radius:8px;background:#f4f2ee;}
+  .product-thumb img{width:100%;aspect-ratio:3/4;object-fit:cover;transition:transform .6s ease, opacity .4s ease;}
+  .product-thumb img.img-back{position:absolute;inset:0;opacity:0;}
+  .product-thumb:hover img.img-front{opacity:0;}
+  .product-thumb:hover img.img-back{opacity:1;}
+  /* zoom lens effect */
+  .zoom-pane{position:relative;overflow:hidden;cursor:zoom-in;border-radius:8px;}
+  .zoom-pane img{display:block;width:100%;transition:transform .08s ease-out;transform-origin:center;}
+
+  .product-actions{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:8px;opacity:0;transform:translateX(8px);transition:.25s;}
+  .product-card:hover .product-actions{opacity:1;transform:translateX(0);}
+  .action-circle{width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid var(--clr-line);display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:.2s;}
+  .action-circle:hover{background:var(--clr-ink);color:#fff;border-color:var(--clr-ink);}
+  .action-circle.active{background:var(--clr-accent);color:#fff;border-color:var(--clr-accent);}
+  .cart-bar{position:absolute;left:0;right:0;bottom:0;background:rgba(20,20,20,.88);color:#fff;text-align:center;padding:.6rem;font-size:.85rem;font-weight:500;opacity:0;transform:translateY(100%);transition:.25s;}
+  .product-card:hover .cart-bar{opacity:1;transform:translateY(0);}
+  .swatch{width:16px;height:16px;border-radius:50%;border:1px solid #d8d4c9;display:inline-block;cursor:pointer;}
+  .swatch.active{outline:2px solid var(--clr-ink);outline-offset:2px;}
+  .price-strike{text-decoration:line-through;color:#a39f92;margin-right:6px;}
+  .badge-sale{position:absolute;top:10px;left:10px;background:var(--clr-accent);color:#fff;font-size:.72rem;padding:.25rem .55rem;border-radius:3px;z-index:2;}
+  .badge-new{position:absolute;top:10px;left:10px;background:var(--clr-ink);color:#fff;font-size:.72rem;padding:.25rem .55rem;border-radius:3px;z-index:2;}
+  .countdown-chip{position:absolute;bottom:0;left:0;right:0;background:#fff;text-align:center;font-size:.82rem;font-weight:600;color:var(--clr-accent);padding:.4rem;}
+
+  .filter-pill{border:1px solid var(--clr-line);background:#fff;padding:.45rem 1.1rem;border-radius:30px;font-size:.88rem;font-weight:500;transition:.2s;}
+  .filter-pill.active,.filter-pill:hover{background:var(--clr-ink);color:#fff;border-color:var(--clr-ink);}
+
+  /* testimonials */
+  .review-card{border:1px solid var(--clr-line);border-radius:10px;padding:1.8rem;height:100%;}
+  .stars i{color:var(--clr-accent);font-size:.85rem;}
+
+  /* brand strip */
+  .brand-strip div{border:1px solid var(--clr-line);border-left:none;}
+  .brand-strip div:first-child{border-left:1px solid var(--clr-line);}
+  .brand-strip{font-weight:700;font-size:1.3rem;color:#1c1c1c;}
+
+  /* footer */
+  footer{background:#fff;}
+  .footer-feature{border:1px solid var(--clr-line);border-radius:10px;padding:1.6rem;text-align:center;}
+  .footer h6{font-weight:600;margin-bottom:1rem;}
+  .footer a{color:var(--clr-muted);display:block;padding:.25rem 0;font-size:.92rem;}
+  .footer a:hover{color:var(--clr-accent);}
+
+  /* toast */
+  .toast-ecomus{position:fixed;top:90px;right:20px;z-index:2000;min-width:280px;}
+
+  /* ===== shop the look hotspots ===== */
+  .look-wrap{position:relative;overflow:hidden;}
+  .look-wrap img{display:block;}
+  .hotspot{position:absolute;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.9);border:none;
+    display:flex;align-items:center;justify-content:center;transform:translate(-50%,-50%);cursor:pointer;
+    box-shadow:0 2px 10px rgba(0,0,0,.25);z-index:5;padding:0;}
+  .hotspot::after{content:'';width:8px;height:8px;border-radius:50%;background:#141414;}
+  .hotspot:hover, .hotspot.active{background:#141414;}
+  .hotspot:hover::after, .hotspot.active::after{background:#fff;}
+  .hotspot-pulse{position:absolute;inset:0;border-radius:50%;background:rgba(255,255,255,.6);animation:hotspot-ping 1.8s ease-out infinite;}
+  @keyframes hotspot-ping{0%{transform:scale(1);opacity:.7;}100%{transform:scale(2.4);opacity:0;}}
+  .hotspot-card{position:absolute;transform:translate(-50%,-50%);width:270px;background:#fff;box-shadow:0 10px 30px rgba(0,0,0,.18);
+    display:flex;align-items:center;gap:12px;padding:12px;z-index:10;opacity:0;visibility:hidden;transition:.2s;}
+  .hotspot-card.show{opacity:1;visibility:visible;}
+  .hotspot-card img{width:56px;height:70px;object-fit:cover;border-radius:4px;}
+  .hotspot-card .hc-name{font-size:.92rem;font-weight:500;}
+  .hotspot-card .hc-price{font-weight:600;font-size:.92rem;}
+  .hotspot-card .hc-eye{margin-left:auto;width:34px;height:34px;border-radius:50%;background:#f2f0ea;border:none;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  @media(max-width:767px){ .hotspot-card{width:220px;} }
+  .look-wrap{ height:420px; }   /* desktop — change 420px to whatever size you want */
+@media(max-width:767px){ .look-wrap{ height:280px; } }  /* mobile size */
+
+  /* back to top */
+  .back-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--clr-ink);color:#fff;display:flex;align-items:center;justify-content:center;z-index:1500;opacity:0;pointer-events:none;transition:.3s;}
+  .back-top.show{opacity:1;pointer-events:auto;}
+
+  /* offcanvas cart item */
+  .cart-line img{width:70px;height:80px;object-fit:cover;border-radius:6px;}
+  .qty-box{width:90px;}
+
+  @media(max-width:991px){
+    .mega-menu{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;display:none;padding:1rem 0;}
+    .nav-item-mega.open .mega-menu{display:block;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ TOPBAR ============ -->
+<div class="topbar d-none d-md-block">
+  <div class="container d-flex justify-content-between align-items-center py-2">
+    <div>
+      <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="#" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
+      <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="#" class="social-icon"><i class="fa-brands fa-pinterest-p"></i></a>
+    </div>
+    <div>Spring Fashion Sale <a href="#products" class="text-decoration-underline fw-semibold" style="color:var(--clr-accent)">Shop now ↗</a></div>
+    <div class="d-flex gap-3">
+      <span>🇺🇸 USD</span>
+      <span>English</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar navbar-expand-lg navbar-ecomus bg-white py-2 sticky-top">
+  <div class="container">
+    <a class="navbar-brand brand-logo" href="#">ecomus</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav mx-auto position-relative">
+        <li class="nav-item"><a class="nav-link nav-link-ecomus" href="#home">Home</a></li>
+
+        <li class="nav-item nav-item-mega position-static">
+          <a class="nav-link nav-link-ecomus" href="#" onclick="toggleMegaMobile(event,this)">Shop <i class="fa-solid fa-chevron-down fa-2xs ms-1"></i></a>
+          <div class="mega-menu">
+            <div class="container">
+              <div class="row g-4">
+                <div class="col-6 col-lg-2">
+                  <h6>Women</h6>
+                  <a class="mega-link" href="#" data-cat="Clothing" onclick="openCategory(event,'Clothing')">Clothing</a>
+                  <a class="mega-link" href="#" data-cat="Shoes" onclick="openCategory(event,'Shoes')">Shoes</a>
+                  <a class="mega-link" href="#" data-cat="Bags" onclick="openCategory(event,'Bags')">Bags</a>
+                  <a class="mega-link" href="#" data-cat="Sunglasses" onclick="openCategory(event,'Sunglasses')">Sunglasses</a>
+                  <a class="mega-link" href="#" data-cat="Fashion" onclick="openCategory(event,'Fashion')">Fashion</a>
+                </div>
+                <div class="col-6 col-lg-2">
+                  <h6>Men</h6>
+                  <a class="mega-link" href="#" data-cat="Clothing" onclick="openCategory(event,'Clothing')">Shirts</a>
+                  <a class="mega-link" href="#" data-cat="Clothing" onclick="openCategory(event,'Clothing')">Hoodies</a>
+                  <a class="mega-link" href="#" data-cat="Shoes" onclick="openCategory(event,'Shoes')">Sneakers</a>
+                  <a class="mega-link" href="#" data-cat="Bags" onclick="openCategory(event,'Bags')">Backpacks</a>
+                </div>
+                <div class="col-6 col-lg-2">
+                  <h6>Collections</h6>
+                  <a class="mega-link" href="#products">New Arrivals</a>
+                  <a class="mega-link" href="#products">Best Sellers</a>
+                  <a class="mega-link" href="#products">Sale</a>
+                  <a class="mega-link" href="#products">Editor's Pick</a>
+                </div>
+                <div class="col-6 col-lg-3">
+                  <div class="mega-thumb">
+                    <!-- IMAGE: Mega menu banner 1 — change src below -->
+                    <img src="https://i.pinimg.com/736x/d7/6e/c4/d76ec460f380d529a66917eed4f6a557.jpg" alt="Mega menu banner — New Season">
+                    <span class="mega-cap">New Season</span>
+                  </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                  <div class="mega-thumb">
+                    <!-- IMAGE: Mega menu banner 2 — change src below -->
+                    <img src="https://i.pinimg.com/1200x/f7/69/87/f76987bc90b981c8816921cb1d1ad895.jpg" alt="Mega menu banner — Up to 50% off">
+                    <span class="mega-cap">Up to 50% off</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item nav-item-mega position-static">
+          <a class="nav-link nav-link-ecomus" href="#" onclick="toggleMegaMobile(event,this)">Products <i class="fa-solid fa-chevron-down fa-2xs ms-1"></i></a>
+          <div class="mega-menu">
+            <div class="container">
+              <div class="row g-3">
+                <div class="col-6 col-lg" id="megaProductsWrap"></div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item"><a class="nav-link nav-link-ecomus" href="#testimonials">Pages</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-ecomus" href="#blog">Blog</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-ecomus" href="#products">Buy now</a></li>
+      </ul>
+
+      <div class="d-flex align-items-center gap-1">
+        <button class="icon-btn" onclick="toggleSearch()" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <button class="icon-btn" title="Account"><i class="fa-regular fa-user"></i></button>
+        <button class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#wishlistPanel" title="Wishlist">
+          <i class="fa-regular fa-heart"></i><span class="badge-count" id="wishCount">0</span>
+        </button>
+        <button class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#cartPanel" title="Cart">
+          <i class="fa-solid fa-bag-shopping"></i><span class="badge-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- search bar -->
+  <div id="searchBar" class="w-100 bg-white border-top d-none">
+    <div class="container py-3">
+      <div class="input-group">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search products..." oninput="renderSearchResults()">
+        <button class="btn btn-ink" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </div>
+      <div id="searchResults" class="mt-3"></div>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="home">
+  <div class="container-fluid p-0">
+    <div class="row g-0 align-items-stretch">
+      <div class="col-lg-6 d-flex flex-column justify-content-center py-5 px-4 px-lg-5">
+        <h1 class="mb-4">Glamorous<br>Glam</h1>
+        <p class="fs-5 mb-4 text-muted">From casual to formal, we've got you covered</p>
+        <div><a href="#products" class="btn btn-ink">Shop collection <i class="fa-solid fa-arrow-right ms-1"></i></a></div>
+      </div>
+      <div class="col-lg-6">
+        <!-- IMAGE: Hero banner — change src below -->
+        <img class="hero-img" src="https://i.pinimg.com/736x/41/4f/ca/414fcaeb2a53887db6864a1748ce1a60.jpg" alt="hero">
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ MARQUEE ============ -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>⚡ Spring Clearance Event: Save Up to 70%</span><span>⚡ Spring Clearance Event: Save Up to 70%</span>
+    <span>⚡ Spring Clearance Event: Save Up to 70%</span><span>⚡ Spring Clearance Event: Save Up to 70%</span>
+    <span>⚡ Spring Clearance Event: Save Up to 70%</span><span>⚡ Spring Clearance Event: Save Up to 70%</span>
+  </div>
+</div>
+
+<!-- ============ CATEGORIES ============ -->
+<section class="container py-5">
+  <div class="d-flex align-items-center gap-3 mb-4">
+    <button class="cat-arrow-btn" onclick="scrollCats(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+    <button class="cat-arrow-btn" onclick="scrollCats(1)"><i class="fa-solid fa-chevron-right"></i></button>
+    <h6 class="mb-0 fw-bold ms-2" style="letter-spacing:.05em;">SHOP BY CATEGORIES</h6>
+  </div>
+  <div class="row g-3" id="catRow">
+    <div class="col-6 col-lg-3">
+      <a class="cat-card" href="#" onclick="openCategory(event,'Clothing')">
+        <!-- IMAGE: Category — Clothing — change src below -->
+        <img src="https://i.pinimg.com/1200x/d5/2d/43/d52d438e4c6efff9a096f556ef24d835.jpg" alt="Clothing">
+        <span class="cat-label">Clothing</span>
+      </a>
+    </div>
+    <div class="col-6 col-lg-3">
+      <a class="cat-card" href="#" onclick="openCategory(event,'Sunglasses')">
+        <!-- IMAGE: Category — Sunglasses — change src below -->
+        <img src="https://i.pinimg.com/736x/bd/fe/95/bdfe95d388c006c1b9bbede827674c41.jpg" alt="Sunglasses">
+        <span class="cat-label">Sunglasses</span>
+      </a>
+    </div>
+    <div class="col-6 col-lg-3">
+      <a class="cat-card" href="#" onclick="openCategory(event,'Bags')">
+        <!-- IMAGE: Category — Bags — change src below -->
+        <img src="https://i.pinimg.com/736x/6d/ce/5a/6dce5acebd3c01f93a152269a420c343.jpg" alt="Bags">
+        <span class="cat-label">Bags</span>
+      </a>
+    </div>
+    <div class="col-6 col-lg-3">
+      <a class="cat-card" href="#" onclick="openCategory(event,'Shoes')">
+        <!-- IMAGE: Category — Shoes — change src below -->
+        <img src="https://i.pinimg.com/1200x/11/df/0f/11df0f2bc0565b813b11b7e1cdfa5b90.jpg" alt="Shoes">
+        <span class="cat-label">Shoes</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CATEGORY FILTER PILLS + PRODUCTS ============ -->
+<section class="container py-4" id="products">
+  <div class="text-center mb-4">
+    <h2>Best Seller</h2>
+    <p class="text-muted">Shop the Latest Styles: Stay ahead of the curve with our newest arrivals</p>
+  </div>
+  <div class="d-flex justify-content-center flex-wrap gap-2 mb-5" id="filterPills"></div>
+  <div class="row g-4" id="productGrid"></div>
+  <div class="text-center mt-5">
+    <button class="btn btn-outline-ink" id="loadMoreBtn" onclick="loadMore()">Load more</button>
+  </div>
+</section>
+
+<!-- ============ SHOP THE LOOK ============ -->
+<section class="py-5 bg-light" id="blog">
+  <div class="text-center mb-4">
+    <h2>Shop the look</h2>
+    <p class="text-muted">Inspire and let yourself be inspired, from one unique fashion to another.</p>
+  </div>
+  <div class="row g-0" id="lookRow"></div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="container py-5" id="testimonials">
+  <div class="text-center mb-5">
+    <h2>Happy Clients</h2>
+    <p class="text-muted">Hear what they say about us</p>
+  </div>
+  <div id="reviewCarousel" class="carousel slide" data-bs-ride="false">
+    <div class="carousel-inner" id="reviewInner"></div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#reviewCarousel" data-bs-slide="prev" style="width:40px;">
+      <span class="carousel-control-prev-icon" style="filter:invert(1)"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#reviewCarousel" data-bs-slide="next" style="width:40px;">
+      <span class="carousel-control-next-icon" style="filter:invert(1)"></span>
+    </button>
+  </div>
+</section>
+
+<!-- ============ BRAND STRIP ============ -->
+<section class="container pb-5">
+  <div class="row g-0 text-center brand-strip">
+    <div class="col-6 col-lg-2 py-4">SSENSE</div>
+    <div class="col-6 col-lg-2 py-4">BURBERRY</div>
+    <div class="col-6 col-lg-2 py-4"><i class="fa-brands fa-fort-awesome fs-1"></i></div>
+    <div class="col-6 col-lg-2 py-4">ASOS</div>
+    <div class="col-6 col-lg-2 py-4">PULL&amp;BEAR</div>
+    <div class="col-6 col-lg-2 py-4">GILDAN</div>
+  </div>
+</section>
+
+<!-- ============ SHOP GRAM ============ -->
+<section class="container pb-5">
+  <div class="text-center mb-4">
+    <h2>Shop Gram</h2>
+    <p class="text-muted">Inspire and let yourself be inspired, from one unique fashion to another.</p>
+  </div>
+  <div class="row g-2" id="gramRow"></div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section class="container py-4">
+  <div class="row g-3">
+    <div class="col-6 col-lg-3"><div class="footer-feature"><i class="fa-solid fa-box fs-3 mb-2"></i><h6 class="mb-1">Free Shipping</h6><small class="text-muted">Free shipping over order $120</small></div></div>
+    <div class="col-6 col-lg-3"><div class="footer-feature"><i class="fa-regular fa-credit-card fs-3 mb-2"></i><h6 class="mb-1">Flexible Payment</h6><small class="text-muted">Pay with Multiple Credit Cards</small></div></div>
+    <div class="col-6 col-lg-3"><div class="footer-feature"><i class="fa-solid fa-rotate-left fs-3 mb-2"></i><h6 class="mb-1">14 Day Returns</h6><small class="text-muted">Within 30 days for an exchange</small></div></div>
+    <div class="col-6 col-lg-3"><div class="footer-feature"><i class="fa-solid fa-headset fs-3 mb-2"></i><h6 class="mb-1">Premium Support</h6><small class="text-muted">Outstanding premium support</small></div></div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-top">
+  <div class="container py-5">
+    <div class="row g-4">
+      <div class="col-lg-3">
+        <div class="brand-logo mb-3">ecomus</div>
+        <p class="text-muted small mb-1">Address: 1234 Fashion Street, Suite 567, New York, NY 10001</p>
+        <p class="text-muted small mb-1">Email: info@fashionshop.com</p>
+        <p class="text-muted small mb-3">Phone: (212) 555-1234</p>
+        <div>
+          <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="#" class="social-icon"><i class="fa-brands fa-pinterest-p"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <h6>Help</h6>
+        <a href="#">Privacy Policy</a><a href="#">Returns + Exchanges</a><a href="#">Shipping</a>
+        <a href="#">Terms &amp; Conditions</a><a href="#">FAQ's</a>
+      </div>
+      <div class="col-6 col-lg-3">
+        <h6>About us</h6>
+        <a href="#">Our Story</a><a href="#">Visit Our Store</a><a href="#">Contact Us</a><a href="#">Account</a>
+      </div>
+      <div class="col-lg-3">
+        <h6>Sign Up for Email</h6>
+        <p class="text-muted small">Sign up to get first dibs on new arrivals, sales, exclusive content, events and more!</p>
+        <div class="input-group">
+          <input class="form-control rounded-0" placeholder="Enter your email...">
+          <button class="btn btn-ink">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="border-top py-3">
+    <div class="container d-flex justify-content-between flex-wrap gap-2 small text-muted">
+      <span>© 2026 Ecomus Store. All Rights Reserved</span>
+      <span><i class="fa-brands fa-cc-visa fa-lg mx-1"></i><i class="fa-brands fa-cc-paypal fa-lg mx-1"></i><i class="fa-brands fa-cc-mastercard fa-lg mx-1"></i><i class="fa-brands fa-cc-amex fa-lg mx-1"></i></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ CART OFFCANVAS ============ -->
+<div class="offcanvas offcanvas-end" id="cartPanel">
+  <div class="offcanvas-header border-bottom">
+    <h5 class="mb-0">Your Cart (<span id="cartPanelCount">0</span>)</h5>
+    <button class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body d-flex flex-column">
+    <div id="cartItems" class="flex-grow-1"></div>
+    <div class="border-top pt-3" id="cartFooter">
+      <div class="d-flex justify-content-between fw-semibold mb-3">
+        <span>Subtotal</span><span id="cartSubtotal">$0.00</span>
+      </div>
+      <button class="btn btn-ink w-100" onclick="checkout()">Checkout</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ WISHLIST OFFCANVAS ============ -->
+<div class="offcanvas offcanvas-end" id="wishlistPanel">
+  <div class="offcanvas-header border-bottom">
+    <h5 class="mb-0">Wishlist (<span id="wishPanelCount">0</span>)</h5>
+    <button class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body" id="wishItems"></div>
+</div>
+
+<!-- ============ CATEGORY MODAL (many options) ============ -->
+<div class="modal fade" id="categoryModal" tabindex="-1">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content" style="border-radius:0;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="categoryModalTitle">Category</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-4" id="categoryModalGrid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ QUICKVIEW MODAL ============ -->
+<div class="modal fade" id="quickViewModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content" style="border-radius:0;">
+      <button class="btn-close position-absolute end-0 top-0 m-3" style="z-index:5" data-bs-dismiss="modal"></button>
+      <div class="modal-body p-0">
+        <div class="row g-0">
+          <div class="col-md-6">
+            <div class="zoom-pane" id="qvZoomPane">
+              <img id="qvImage" src="" class="w-100" style="height:100%;object-fit:cover;">
+            </div>
+          </div>
+          <div class="col-md-6 p-4">
+            <h4 id="qvName">Product name</h4>
+            <div class="mb-2" id="qvPrice"></div>
+            <p class="text-muted small" id="qvDesc">Premium quality, crafted with care. A versatile addition to your wardrobe.</p>
+            <div class="mb-3">
+              <div class="small fw-semibold mb-1">Color</div>
+              <div id="qvSwatches" class="d-flex gap-2"></div>
+            </div>
+            <div class="mb-3">
+              <div class="small fw-semibold mb-1">Size</div>
+              <div id="qvSizes" class="d-flex gap-2"></div>
+            </div>
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <div class="input-group qty-box">
+                <button class="btn btn-outline-secondary" onclick="changeQty(-1)">−</button>
+                <input type="text" class="form-control text-center" id="qvQty" value="1" readonly>
+                <button class="btn btn-outline-secondary" onclick="changeQty(1)">+</button>
+              </div>
+            </div>
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <button class="btn btn-ink flex-grow-1" id="qvAddBtn" onclick="addToCartFromModal()"><i class="fa-solid fa-bag-shopping me-2"></i>Add to cart</button>
+              <button class="action-circle" id="qvWishBtn" title="Wishlist" onclick="addToWishlistFromModal()"><i class="fa-regular fa-heart"></i></button>
+              <button class="action-circle" title="Compare"><i class="fa-solid fa-arrows-left-right"></i></button>
+            </div>
+            <button class="btn w-100 mb-2" style="background:#ffc439;font-weight:700;color:#003087;" onclick="showToast('PayPal checkout is a demo in this build')">
+              <i class="fa-brands fa-paypal me-1"></i>Buy with PayPal
+            </button>
+            <div class="text-center"><a href="#" class="small text-muted text-decoration-underline" onclick="return false;">More payment options</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast-ecomus">
+  <div id="mainToast" class="toast align-items-center text-bg-dark border-0" role="alert">
+    <div class="d-flex">
+      <div class="toast-body" id="toastMsg">Done</div>
+      <button class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fa-solid fa-chevron-up"></i></button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script>
+/* =========================================================
+   DATA
+========================================================= */
+const CATEGORIES = ["Clothing","Sunglasses","Bags","Shoes","Fashion"];
+const COLORS = ["#e8b84b","#141414","#c1440e","#7a9e9f","#d8d4c9"];
+const SIZES  = ["XS","S","M","L","XL"];
+
+/* Fallback image generator — only used for images that aren't in a named
+   list below (e.g. if you add new products). Every image you actually see
+   on the page comes from a named constant you can edit directly. */
+function seedImg(seed,w=500,h=650){ return `https://picsum.photos/seed/${seed}/${w}/${h}`; }
+
+/* ---------------------------------------------------------
+   EVERY PRODUCT IMAGE, LISTED ONE BY ONE.
+   Find the product by its name in the comment, then replace
+   its img1 (front photo) / img2 (hover photo) link below.
+--------------------------------------------------------- */
+const PRODUCT_IMAGES = {
+  // ---- Clothing ----
+  "Clothing-0": { img1: "https://i.pinimg.com/1200x/bf/0b/e0/bf0be0397ce8eb4715db296b6a6d3f83.jpg", img2: "https://i.pinimg.com/1200x/52/54/55/5254559b384bef807f9fd07aab8c3f99.jpg" }, // Ribbed Tank Top
+  "Clothing-1": { img1: "https://i.pinimg.com/736x/25/da/a8/25daa8f59d3e9c405fc35ed6fcb3b9d5.jpg", img2: "https://i.pinimg.com/736x/4b/87/3a/4b873a07578301c059d34bd2683ed090.jpg" }, // Ribbed Modal T-shirt
+  "Clothing-2": { img1: "https://i.pinimg.com/1200x/68/20/24/6820246ce1dba98a537adca6b2d932e4.jpg", img2: "https://i.pinimg.com/1200x/2b/71/f7/2b71f719ef0da2c514441a72fec04d84.jpg" }, // Oversized Printed Tee
+  "Clothing-3": { img1: "https://i.pinimg.com/1200x/02/7c/37/027c37ae0976099d1016dbdd0549d055.jpg", img2: "https://i.pinimg.com/1200x/1b/e7/57/1be757450f265870391e52a594d1c302.jpg" }, // V-neck Linen T-shirt
+  "Clothing-4": { img1: "https://i.pinimg.com/1200x/64/2e/b4/642eb4892c59c7d64543c5094a4a9fbc.jpg", img2: "https://i.pinimg.com/736x/36/95/97/369597858e4367cd2c2be3eec4b70813.jpg" }, // Loose Fit Sweatshirt
+  "Clothing-5": { img1: "https://i.pinimg.com/736x/e2/0e/38/e20e3878b4a1e9014afc1bdec9151411.jpg", img2: "https://i.pinimg.com/736x/e5/58/e7/e558e7a957b0bf0aaa78a7c564b6cba4.jpg" }, // Regular Fit Oxford Shirt
+  "Clothing-6": { img1: "https://i.pinimg.com/736x/87/1d/d4/871dd4a596d396dc2fb01ed2c7e7b018.jpg", img2: "https://i.pinimg.com/736x/34/e5/3b/34e53bbc34c0b792321ad14907a08595.jpg" }, // Loose Fit Hoodie
+  "Clothing-7": { img1: "https://i.pinimg.com/736x/1a/dd/f5/1addf5ef0e69b16d93bc1071f31ec67b.jpg", img2: "https://i.pinimg.com/736x/d8/f4/13/d8f413ca93bbc1c7f4f98740012b488c.jpg" }, // Wide Leg Trousers
+  // ---- Sunglasses ----
+  "Sunglasses-0": { img1: "https://i.pinimg.com/1200x/a6/28/92/a628925e22abd2ff86056dfda304d844.jpg", img2: "https://i.pinimg.com/736x/b0/fd/2b/b0fd2bd8b5c8f06f39d008a81b2dafd5.jpg" }, // Classic Tortoise Sunglasses
+  "Sunglasses-1": { img1: "https://i.pinimg.com/736x/39/7c/dc/397cdc45f905882094e6d3187e3b750d.jpg", img2: "https://i.pinimg.com/736x/9e/b8/a1/9eb8a119ff36a56d2028991ea3aeff98.jpg" }, // Square Frame Sunglasses
+  "Sunglasses-2": { img1: "https://i.pinimg.com/736x/d0/ce/13/d0ce13a82070277f9c30bfc9c0936688.jpg", img2: "https://i.pinimg.com/736x/b2/ce/e4/b2cee491f2b8cc4d5fb4860af57b778f.jpg" }, // Oversized Cat-eye
+  "Sunglasses-3": { img1: "https://i.pinimg.com/736x/43/db/55/43db55fade9d175fa7ea946a8ea54068.jpg", img2: "https://i.pinimg.com/736x/d0/35/ea/d035ead58105dd4c9605e83058aff0ef.jpg" }, // Retro Round Sunglasses
+  "Sunglasses-4": { img1: "https://i.pinimg.com/736x/5a/3b/c0/5a3bc0738105a7b719c8210835e9021c.jpg", img2: "https://i.pinimg.com/736x/19/32/ee/1932ee355f28ad82afae5ebacd8d81a6.jpg" }, // Aviator Sunglasses
+  "Sunglasses-5": { img1: "https://i.pinimg.com/1200x/6d/16/6c/6d166cd125a1903ba62714b250e460da.jpg", img2: "https://i.pinimg.com/736x/c4/2b/12/c42b1214bbab3f1ea1c060a6fff68d22.jpg" }, // Sport Wrap Sunglasses
+  "Sunglasses-6": { img1: "https://i.pinimg.com/736x/f4/b5/a1/f4b5a1649352ed69a02330f35a49e626.jpg", img2: "https://i.pinimg.com/736x/b7/97/c0/b797c0d7587b5e4697dd9e2cf5ea9fcb.jpg" }, // Gradient Lens Sunglasses
+  "Sunglasses-7": { img1: "https://i.pinimg.com/736x/3b/a1/28/3ba128f1542ba786de489c2ac85a0457.jpg", img2: "https://i.pinimg.com/1200x/d8/68/cb/d868cbfe7eb6df83c001d3c45c1e0011.jpg" }, // Slim Metal Frame
+  // ---- Bags ----
+  "Bags-0": { img1: "https://i.pinimg.com/1200x/15/6e/35/156e35c5cf61f951397a9e9c13f4f202.jpg", img2: "https://i.pinimg.com/736x/c9/a5/c7/c9a5c79b5fb57936e0bf17c281793f50.jpg" }, // Structured Tote Bag
+  "Bags-1": { img1: "https://i.pinimg.com/736x/5d/cd/18/5dcd18648c9ce207e9f9987674937a8d.jpg", img2: "https://i.pinimg.com/736x/e8/64/a7/e864a75ee7f75d57a30dfed510ec3933.jpg" }, // Mini Crossbody Bag
+  "Bags-2": { img1: "https://i.pinimg.com/736x/90/f9/d6/90f9d6f8f55541997beb050115fd7bc0.jpg", img2: "https://i.pinimg.com/736x/e1/ba/c3/e1bac356eac3ed76e37d36c006f3689d.jpg" }, // Leather Shoulder Bag
+  "Bags-3": { img1: "https://i.pinimg.com/1200x/5f/46/76/5f46766bb02b4821f7f14277bc2ea093.jpg", img2: "https://i.pinimg.com/736x/fe/4e/a7/fe4ea7828c9fee6d15d9e0f095f525fe.jpg" }, // Woven Beach Bag
+  "Bags-4": { img1: "https://i.pinimg.com/1200x/3d/84/41/3d84412269b2bd1c027b0541173ecaa7.jpg", img2: "https://i.pinimg.com/736x/0e/43/ad/0e43ad226b73c77b33fa4f0014781f9e.jpg" }, // Quilted Chain Bag
+  "Bags-5": { img1: "https://i.pinimg.com/1200x/50/dc/07/50dc073a6763d573a77f228f90b1b241.jpg", img2: "https://i.pinimg.com/736x/6c/b6/78/6cb678c7cb1d205182d93842098ff953.jpg" }, // Canvas Backpack
+  "Bags-6": { img1: "https://i.pinimg.com/1200x/05/fa/74/05fa7420df87186a8471ce665c1831b1.jpg", img2: "https://i.pinimg.com/1200x/f9/ed/ea/f9edea2790fb6dd5c6220bdb33ae3ff4.jpg" }, // Top Handle Satchel
+  "Bags-7": { img1: "https://i.pinimg.com/736x/58/1a/f2/581af23b5e70eae17341de6019e24a58.jpg", img2: "https://i.pinimg.com/1200x/8d/bb/ce/8dbbce7a1f960d75611c1f185211eed7.jpg" }, // Drawstring Bucket Bag
+  // ---- Shoes ----
+  "Shoes-0": { img1: "https://i.pinimg.com/736x/e0/ed/99/e0ed998db0690f98129ddef200d75115.jpg", img2: "https://i.pinimg.com/736x/96/95/b2/9695b2843a286f0c32d8eaca8a4f9fe8.jpg" }, // Chunky Sneakers
+  "Shoes-1": { img1: "https://i.pinimg.com/1200x/dc/98/f7/dc98f70a54ff5994745a92a75edaae14.jpg", img2: "https://i.pinimg.com/736x/b3/4e/e6/b34ee64cff9b9d242c35e536c233efb8.jpg" }, // Suede Ankle Boots
+  "Shoes-2": { img1: "https://i.pinimg.com/1200x/31/8b/0e/318b0e3ffc74dbe5ca21ea6ce9e3749e.jpg", img2: "https://i.pinimg.com/736x/49/9e/83/499e83502232350f75a1a3c014a80cec.jpg" }, // Platform Loafers
+  "Shoes-3": { img1: "https://i.pinimg.com/736x/ba/a3/38/baa3380036d7ff9e71dc5a54c3118baa.jpg", img2: "https://i.pinimg.com/1200x/00/34/29/00342901eaed69f5920d88371965d933.jpg" }, // Classic White Sneakers
+  "Shoes-4": { img1: "https://i.pinimg.com/1200x/64/0c/73/640c73ec9772785545c01f67ce7da975.jpg", img2: "https://i.pinimg.com/736x/7f/8e/cc/7f8eccb028238a4099b3cf73b34b579b.jpg" }, // Strappy Sandals
+  "Shoes-5": { img1: "https://i.pinimg.com/736x/c4/e8/8c/c4e88c9a9ce15a00546cbb759b0cca73.jpg", img2: "https://i.pinimg.com/1200x/bc/89/9b/bc899b59652cfc91bcc87fef37ece2b0.jpg" }, // Combat Boots
+  "Shoes-6": { img1: "https://i.pinimg.com/736x/5e/9f/e5/5e9fe5e77cab7519919e6ed554fe3136.jpg", img2: "https://i.pinimg.com/736x/49/eb/26/49eb2660c20a98a03174980b4a0901e5.jpg" }, // Slip-on Mules
+  "Shoes-7": { img1: "https://i.pinimg.com/736x/01/7d/20/017d2017a80c4fab9d8ccf884506f46b.jpg", img2: "https://i.pinimg.com/736x/d7/d5/35/d7d5351eb3b3355244a846d9d3e1d033.jpg" }, // Running Trainers
+  // ---- Fashion ----
+  "Fashion-0": { img1: "https://i.pinimg.com/736x/ac/53/a0/ac53a083b30dc6ccfe7796218264e570.jpg", img2: "https://i.pinimg.com/736x/80/4b/ee/804bee96f0dba291258df3b27ac5e3af.jpg" }, // Silk Printed Scarf
+  "Fashion-1": { img1: "https://i.pinimg.com/736x/ff/0c/48/ff0c489ab3cc0f1363487ceaff7e0ac2.jpg", img2: "https://i.pinimg.com/1200x/cd/8a/a5/cd8aa5e2f51c9b0461dba52551367132.jpg" }, // Leather Belt
+  "Fashion-2": { img1: "https://i.pinimg.com/736x/2a/53/9f/2a539ffb7ccd20910f956284bb6c671d.jpg", img2: "https://i.pinimg.com/736x/21/8f/d6/218fd6f735a5662049db9bb2b20d7838.jpg" }, // Statement Earrings
+  "Fashion-3": { img1: "https://i.pinimg.com/736x/5f/ab/64/5fab642063e543048c64ed659006d50d.jpg", img2: "https://i.pinimg.com/736x/e4/a4/1d/e4a41d2e2e1f17dbc1d6f0d2a9e10aef.jpg" }, // Wool Beanie
+  "Fashion-4": { img1: "https://i.pinimg.com/1200x/c8/a8/69/c8a869834ce170ca11f99d93ee437ac4.jpg", img2: "https://i.pinimg.com/736x/80/d3/10/80d31027ce3490a4e928273ab68fc26f.jpg" }, // Layered Necklace
+  "Fashion-5": { img1: "https://i.pinimg.com/736x/80/4e/63/804e63dbb13955e2bc875af86648510e.jpg", img2: "https://i.pinimg.com/736x/52/05/19/52051980bc030d507ab0615419ac4d2f.jpg" }, // Cotton Bandana
+  "Fashion-6": { img1: "https://i.pinimg.com/1200x/6d/39/cd/6d39cd8399429650631e51f3da94ac3f.jpg", img2: "https://i.pinimg.com/1200x/13/99/00/139900e88e2262cdca2703d31577d635.jpg" }, // Knit Gloves
+  "Fashion-7": { img1: "https://i.pinimg.com/1200x/47/ff/74/47ff74f5d2d930bb7231c00f30f73d1f.jpg", img2: "https://i.pinimg.com/736x/6b/16/ab/6b16ab5cbb8f0b29e27c7c76ce2136d1.jpg" }, // Wide Brim Hat
+};
+
+function buildProducts(){
+  const names = {
+    Clothing: ["Ribbed Tank Top","Ribbed Modal T-shirt","Oversized Printed Tee","V-neck Linen T-shirt","Loose Fit Sweatshirt","Regular Fit Oxford Shirt","Loose Fit Hoodie","Wide Leg Trousers"],
+    Sunglasses: ["Classic Tortoise Sunglasses","Square Frame Sunglasses","Oversized Cat-eye","Retro Round Sunglasses","Aviator Sunglasses","Sport Wrap Sunglasses","Gradient Lens Sunglasses","Slim Metal Frame"],
+    Bags: ["Structured Tote Bag","Mini Crossbody Bag","Leather Shoulder Bag","Woven Beach Bag","Quilted Chain Bag","Canvas Backpack","Top Handle Satchel","Drawstring Bucket Bag"],
+    Shoes: ["Chunky Sneakers","Suede Ankle Boots","Platform Loafers","Classic White Sneakers","Strappy Sandals","Combat Boots","Slip-on Mules","Running Trainers"],
+    Fashion: ["Silk Printed Scarf","Leather Belt","Statement Earrings","Wool Beanie","Layered Necklace","Cotton Bandana","Knit Gloves","Wide Brim Hat"]
+  };
+  let id=1; const list=[];
+  CATEGORIES.forEach(cat=>{
+    names[cat].forEach((n,i)=>{
+      const price = (Math.random()*90+9.95).toFixed(2);
+      const onSale = i%3===0;
+      list.push({
+        id:id++, name:n, category:cat,
+        price:Number(price),
+        oldPrice: onSale ? (Number(price)*1.4).toFixed(2) : null,
+        isNew: i%4===0 && !onSale,
+        img1: (PRODUCT_IMAGES[cat+"-"+i]||{}).img1 || seedImg(cat+i+"a"),
+        img2: (PRODUCT_IMAGES[cat+"-"+i]||{}).img2 || seedImg(cat+i+"b"),
+        colors: COLORS.slice(0, 3+(i%3)),
+        sizes: cat==="Clothing" ? SIZES : ["One Size"]
+      });
+    });
+  });
+  return list;
+}
+const PRODUCTS = buildProducts();
+
+/* ---------------------------------------------------------
+   "Shop the look" section images — edit these two links directly. */
+const LOOK_IMAGE_A = "https://i.pinimg.com/736x/56/d3/17/56d31752632422234d06e507696aebe9.jpg"; // Look photo 1 (girl with hat + necklace)
+const LOOK_IMAGE_B = "https://i.pinimg.com/1200x/ca/63/a9/ca63a906b526eeaa2764c24dfb133d92.jpg"; // Look photo 2 (hat close-up)
+
+/* extra standalone items used only for "shop the look" hotspots */
+let nextLookId = PRODUCTS.length + 1000;
+function addLookProduct(name, category, price, img){
+  const p = { id: nextLookId++, name, category, price, oldPrice:null, isNew:false,
+    img1: img, img2: img, colors: COLORS.slice(0,3), sizes:["One Size"] };
+  PRODUCTS.push(p);
+  return p;
+}
+const LOOK_NECKLACE = addLookProduct("Shell Beaded Necklace","Bags",24.00, "https://i.pinimg.com/736x/56/d3/17/56d31752632422234d06e507696aebe9.jpg"); // hotspot thumbnail
+const LOOK_TOP      = PRODUCTS.find(p=>p.name==="Ribbed Modal T-shirt") || addLookProduct("Ribbed Modal T-shirt","Clothing",20.00, "https://i.pinimg.com/1200x/ca/63/a9/ca63a906b526eeaa2764c24dfb133d92.jpg");
+const LOOK_HAT       = addLookProduct("Frayed Straw Bucket Hat","Shoes",32.00, "https://i.pinimg.com/1200x/ca/63/a9/ca63a906b526eeaa2764c24dfb133d92.jpg"); // hotspot thumbnail
+
+const LOOKS = [
+  { img: LOOK_IMAGE_A, hotspots:[
+      { x:47, y:52, id: LOOK_NECKLACE.id },
+      { x:63, y:80, id: LOOK_TOP.id }
+    ]},
+  { img: LOOK_IMAGE_B, hotspots:[
+      { x:60, y:29, id: LOOK_HAT.id }
+    ]}
+];
+
+/* =========================================================
+   STATE (localStorage backed)
+========================================================= */
+let cart = JSON.parse(localStorage.getItem('ecomus_cart')||'[]');
+let wishlist = JSON.parse(localStorage.getItem('ecomus_wishlist')||'[]');
+let visibleCount = 8;
+let activeFilter = 'All';
+let modalProduct = null, modalQty = 1, modalColor=null, modalSize=null;
+
+function persist(){
+  localStorage.setItem('ecomus_cart', JSON.stringify(cart));
+  localStorage.setItem('ecomus_wishlist', JSON.stringify(wishlist));
+}
+
+function showToast(msg){
+  document.getElementById('toastMsg').textContent = msg;
+  new bootstrap.Toast(document.getElementById('mainToast'),{delay:1800}).show();
+}
+
+/* =========================================================
+   RENDER: FILTER PILLS
+========================================================= */
+function renderPills(){
+  const wrap = document.getElementById('filterPills');
+  const cats = ['All',...CATEGORIES];
+  wrap.innerHTML = cats.map(c=>`<button class="filter-pill ${c===activeFilter?'active':''}" onclick="setFilter('${c}')">${c}</button>`).join('');
+}
+function setFilter(c){ activeFilter=c; visibleCount=8; renderPills(); renderProducts(); }
+
+/* =========================================================
+   RENDER: PRODUCT CARD (shared)
+========================================================= */
+function productCardHTML(p){
+  const inWish = wishlist.some(w=>w.id===p.id);
+  return `
+  <div class="col-6 col-lg-3 product-card" data-id="${p.id}">
+    <div class="product-thumb">
+      ${p.oldPrice?`<span class="badge-sale">Sale</span>`:(p.isNew?`<span class="badge-new">New</span>`:'')}
+      <img class="img-front" src="${p.img1}" alt="${p.name}" onclick="openQuickView(${p.id})" style="cursor:pointer;">
+      <img class="img-back" src="${p.img2}" alt="${p.name}">
+      <div class="product-actions">
+        <button class="action-circle" title="Quick view" onclick="openQuickView(${p.id})"><i class="fa-regular fa-eye"></i></button>
+        <button class="action-circle ${inWish?'active':''}" title="Wishlist" onclick="toggleWishlist(${p.id})"><i class="fa-${inWish?'solid':'regular'} fa-heart"></i></button>
+        <button class="action-circle" title="Compare"><i class="fa-solid fa-arrows-left-right"></i></button>
+      </div>
+      <div class="cart-bar" onclick="quickAddToCart(${p.id})"><i class="fa-solid fa-bag-shopping me-1"></i> Add to cart</div>
+    </div>
+    <div class="pt-2">
+      <div class="small text-muted">${p.category}</div>
+      <div class="fw-medium">${p.name}</div>
+      <div>${p.oldPrice?`<span class="price-strike">$${p.oldPrice}</span>`:''}<span class="fw-semibold">$${p.price}</span></div>
+      <div class="d-flex gap-1 mt-1">
+        ${p.colors.map(c=>`<span class="swatch" style="background:${c}"></span>`).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderProducts(){
+  const grid = document.getElementById('productGrid');
+  let list = activeFilter==='All' ? PRODUCTS : PRODUCTS.filter(p=>p.category===activeFilter);
+  const shown = list.slice(0,visibleCount);
+  grid.innerHTML = shown.map(productCardHTML).join('');
+  document.getElementById('loadMoreBtn').style.display = shown.length>=list.length ? 'none':'inline-block';
+}
+function loadMore(){ visibleCount+=8; renderProducts(); }
+
+/* =========================================================
+   CATEGORY MODAL — "many options"
+========================================================= */
+function openCategory(e,cat){
+  if(e) e.preventDefault();
+  document.getElementById('categoryModalTitle').textContent = cat + ' — ' + PRODUCTS.filter(p=>p.category===cat).length + ' options';
+  document.getElementById('categoryModalGrid').innerHTML = PRODUCTS.filter(p=>p.category===cat).map(productCardHTML).join('');
+  new bootstrap.Modal(document.getElementById('categoryModal')).show();
+}
+
+/* =========================================================
+   QUICK VIEW MODAL + ZOOM
+========================================================= */
+function openQuickView(id){
+  modalProduct = PRODUCTS.find(p=>p.id===id);
+  modalQty = 1; modalColor = modalProduct.colors[0]; modalSize = modalProduct.sizes[0];
+  document.getElementById('qvImage').src = modalProduct.img1;
+  document.getElementById('qvName').textContent = modalProduct.name;
+  document.getElementById('qvPrice').innerHTML = (modalProduct.oldPrice?`<span class="price-strike">$${modalProduct.oldPrice}</span>`:'') + `<span class="fw-semibold fs-5">$${modalProduct.price}</span>`;
+  document.getElementById('qvQty').value = modalQty;
+  document.getElementById('qvSwatches').innerHTML = modalProduct.colors.map((c,i)=>`<span class="swatch ${i===0?'active':''}" style="background:${c}" onclick="pickColor(this,'${c}')"></span>`).join('');
+  document.getElementById('qvSizes').innerHTML = modalProduct.sizes.map((s,i)=>`<button class="btn btn-sm ${i===0?'btn-ink':'btn-outline-ink'}" onclick="pickSize(this,'${s}')">${s}</button>`).join('');
+  new bootstrap.Modal(document.getElementById('quickViewModal')).show();
+}
+function pickColor(el,c){ modalColor=c; document.querySelectorAll('#qvSwatches .swatch').forEach(s=>s.classList.remove('active')); el.classList.add('active'); }
+function pickSize(el,s){ modalSize=s; document.querySelectorAll('#qvSizes button').forEach(b=>b.className='btn btn-sm btn-outline-ink'); el.className='btn btn-sm btn-ink'; }
+function changeQty(delta){ modalQty=Math.max(1,modalQty+delta); document.getElementById('qvQty').value=modalQty; }
+
+/* image zoom-on-hover (magnify) */
+const zoomPane = document.getElementById('qvZoomPane');
+zoomPane.addEventListener('mousemove', e=>{
+  const img = document.getElementById('qvImage');
+  const rect = zoomPane.getBoundingClientRect();
+  const x = ((e.clientX-rect.left)/rect.width)*100;
+  const y = ((e.clientY-rect.top)/rect.height)*100;
+  img.style.transformOrigin = `${x}% ${y}%`;
+  img.style.transform = 'scale(2)';
+});
+zoomPane.addEventListener('mouseleave', ()=>{
+  document.getElementById('qvImage').style.transform='scale(1)';
+});
+
+/* =========================================================
+   CART / WISHLIST ACTIONS
+========================================================= */
+function quickAddToCart(id){
+  const p = PRODUCTS.find(x=>x.id===id);
+  addToCart(p, 1, p.colors[0], p.sizes[0]);
+}
+function addToCartFromModal(){
+  addToCart(modalProduct, modalQty, modalColor, modalSize);
+  bootstrap.Modal.getInstance(document.getElementById('quickViewModal')).hide();
+}
+function addToCart(p, qty, color, size){
+  const key = p.id+'-'+color+'-'+size;
+  const existing = cart.find(c=>c.key===key);
+  if(existing){ existing.qty += qty; }
+  else{ cart.push({key, id:p.id, name:p.name, price:p.price, img:p.img1, qty, color, size}); }
+  persist(); renderCart(); showToast(p.name + ' added to cart');
+}
+function removeFromCart(key){ cart = cart.filter(c=>c.key!==key); persist(); renderCart(); }
+function changeCartQty(key,delta){
+  const item = cart.find(c=>c.key===key);
+  if(!item) return;
+  item.qty += delta;
+  if(item.qty<=0) cart = cart.filter(c=>c.key!==key);
+  persist(); renderCart();
+}
+function checkout(){
+  if(cart.length===0){ showToast('Your cart is empty'); return; }
+  showToast('Proceeding to checkout…');
+}
+
+function toggleWishlist(id){
+  const p = PRODUCTS.find(x=>x.id===id);
+  const idx = wishlist.findIndex(w=>w.id===id);
+  if(idx>-1){ wishlist.splice(idx,1); showToast(p.name+' removed from wishlist'); }
+  else{ wishlist.push(p); showToast(p.name+' added to wishlist'); }
+  persist(); renderWishlist(); renderProducts();
+}
+function addToWishlistFromModal(){
+  if(!wishlist.some(w=>w.id===modalProduct.id)){
+    wishlist.push(modalProduct); persist(); renderWishlist(); showToast(modalProduct.name+' added to wishlist');
+  } else { showToast('Already in wishlist'); }
+}
+
+function renderCart(){
+  const count = cart.reduce((a,c)=>a+c.qty,0);
+  document.getElementById('cartCount').textContent = count;
+  document.getElementById('cartPanelCount').textContent = count;
+  const wrap = document.getElementById('cartItems');
+  if(cart.length===0){ wrap.innerHTML = '<p class="text-muted text-center mt-4">Your cart is empty.</p>'; }
+  else{
+    wrap.innerHTML = cart.map(c=>`
+      <div class="d-flex gap-3 py-3 border-bottom cart-line">
+        <img src="${c.img}" alt="${c.name}">
+        <div class="flex-grow-1">
+          <div class="fw-medium">${c.name}</div>
+          <div class="small text-muted">${c.color?`Color: <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${c.color}"></span>`:''} ${c.size?' · Size: '+c.size:''}</div>
+          <div class="d-flex align-items-center gap-2 mt-1">
+            <button class="btn btn-sm btn-outline-secondary" onclick="changeCartQty('${c.key}',-1)">−</button>
+            <span>${c.qty}</span>
+            <button class="btn btn-sm btn-outline-secondary" onclick="changeCartQty('${c.key}',1)">+</button>
+            <span class="ms-auto fw-semibold">$${(c.price*c.qty).toFixed(2)}</span>
+          </div>
+        </div>
+        <button class="btn btn-sm text-danger" onclick="removeFromCart('${c.key}')"><i class="fa-solid fa-xmark"></i></button>
+      </div>`).join('');
+  }
+  const subtotal = cart.reduce((a,c)=>a+c.price*c.qty,0);
+  document.getElementById('cartSubtotal').textContent = '$'+subtotal.toFixed(2);
+}
+
+function renderWishlist(){
+  document.getElementById('wishCount').textContent = wishlist.length;
+  document.getElementById('wishPanelCount').textContent = wishlist.length;
+  const wrap = document.getElementById('wishItems');
+  if(wishlist.length===0){ wrap.innerHTML = '<p class="text-muted text-center mt-4">No items yet.</p>'; return; }
+  wrap.innerHTML = wishlist.map(p=>`
+    <div class="d-flex gap-3 py-3 border-bottom cart-line">
+      <img src="${p.img1}" alt="${p.name}">
+      <div class="flex-grow-1">
+        <div class="fw-medium">${p.name}</div>
+        <div class="fw-semibold small">$${p.price}</div>
+        <button class="btn btn-sm btn-ink mt-1" onclick="quickAddToCart(${p.id})">Add to cart</button>
+      </div>
+      <button class="btn btn-sm text-danger" onclick="toggleWishlist(${p.id})"><i class="fa-solid fa-xmark"></i></button>
+    </div>`).join('');
+}
+
+/* =========================================================
+   TESTIMONIALS
+========================================================= */
+const REVIEWS = [
+  {name:"Robert Smith", from:"USA", title:"Best Online Fashion Site", text:"I always find something stylish and affordable on this web fashion site."},
+  {name:"Allen Lyn", from:"France", title:"Great Selection and Quality", text:"I love the variety of styles and the high-quality clothing on this web fashion site."},
+  {name:"Peter Rope", from:"UK", title:"Best Customer Service", text:"I finally found a web fashion site with stylish and flattering options in my size."},
+  {name:"Maria Chen", from:"Canada", title:"Fast Shipping", text:"Orders arrive quickly and everything is packaged so nicely, love shopping here."}
+];
+function renderReviews(){
+  const inner = document.getElementById('reviewInner');
+  const chunks = [];
+  for(let i=0;i<REVIEWS.length;i+=3) chunks.push(REVIEWS.slice(i,i+3));
+  inner.innerHTML = chunks.map((chunk,ci)=>`
+    <div class="carousel-item ${ci===0?'active':''}">
+      <div class="row g-4">
+        ${chunk.map(r=>`
+          <div class="col-md-4">
+            <div class="review-card">
+              <div class="stars mb-2">${'<i class="fa-solid fa-star"></i>'.repeat(5)}</div>
+              <h6 class="fw-semibold">${r.title}</h6>
+              <p class="text-muted small">"${r.text}"</p>
+              <div class="fw-medium">${r.name}</div>
+              <div class="small text-muted">Customer from ${r.from}</div>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+/* =========================================================
+   SHOP THE LOOK — hotspots
+========================================================= */
+function renderLooks(){
+  const row = document.getElementById('lookRow');
+  row.innerHTML = LOOKS.map((look, li)=>`
+    <div class="col-md-6 look-wrap">
+      <img src="${look.img}" alt="Shop the look ${li+1}" class="w-100" style="object-fit:cover;height:100%;">
+      ${look.hotspots.map((h,hi)=>{
+        const p = PRODUCTS.find(x=>x.id===h.id);
+        return `
+        <button class="hotspot" style="left:${h.x}%;top:${h.y}%;" onclick="toggleHotspot(event,'${li}-${hi}')">
+          <span class="hotspot-pulse"></span>
+        </button>
+        <div class="hotspot-card" id="hcard-${li}-${hi}" style="left:${h.x}%;top:${h.y}%; margin-top:${h.y>60?'-140px':'40px'};">
+          <img src="${p.img1}" alt="${p.name}">
+          <div>
+            <div class="hc-name">${p.name}</div>
+            <div class="hc-price">$${p.price.toFixed(2)}</div>
+          </div>
+          <button class="hc-eye" onclick="event.stopPropagation();openQuickView(${p.id})"><i class="fa-regular fa-eye"></i></button>
+        </div>`;
+      }).join('')}
+    </div>`).join('');
+}
+function toggleHotspot(e, key){
+  e.stopPropagation();
+  const card = document.getElementById('hcard-'+key);
+  const isShown = card.classList.contains('show');
+  document.querySelectorAll('.hotspot-card').forEach(c=>c.classList.remove('show'));
+  document.querySelectorAll('.hotspot').forEach(b=>b.classList.remove('active'));
+  if(!isShown){ card.classList.add('show'); e.currentTarget.classList.add('active'); }
+}
+document.addEventListener('click', ()=>{
+  document.querySelectorAll('.hotspot-card').forEach(c=>c.classList.remove('show'));
+  document.querySelectorAll('.hotspot').forEach(b=>b.classList.remove('active'));
+});
+
+/* =========================================================
+   MEGA MENU PRODUCTS + GRAM + SEARCH
+========================================================= */
+function renderMegaProducts(){
+  document.getElementById('megaProductsWrap').outerHTML = CATEGORIES.map(c=>{
+    const items = PRODUCTS.filter(p=>p.category===c).slice(0,4);
+    return `<div class="col-6 col-lg">
+      <h6>${c}</h6>
+      ${items.map(p=>`<a class="mega-link" href="#" onclick="openQuickView(${p.id})">${p.name}</a>`).join('')}
+      <a class="mega-link fw-semibold" href="#" style="color:var(--clr-accent)" onclick="openCategory(event,'${c}')">View all →</a>
+    </div>`;
+  }).join('');
+}
+/* ---------------------------------------------------------
+   "Shop Gram" strip — 5 images, edit each link directly. */
+const GRAM_IMAGES = [
+  "https://i.pinimg.com/736x/39/7c/dc/397cdc45f905882094e6d3187e3b750d.jpg", // Gram photo 1 — links to a Sunglasses product
+  "https://i.pinimg.com/1200x/41/9f/96/419f965916552d452076f0e0ab564e71.jpg", // Gram photo 2 — links to a Bags product
+  "https://i.pinimg.com/1200x/03/79/3d/03793d601aa51e345281e0723239df5b.jpg", // Gram photo 3 — links to the Bucket Hat
+  "https://i.pinimg.com/736x/65/ee/6b/65ee6b765a0ec34ba32f904d5b17140e.jpg", // Gram photo 4 — links to a Shoes product
+  "https://i.pinimg.com/736x/73/a9/d9/73a9d991b4839e311852c0d4c8596d27.jpg", // Gram photo 5 — links to a fashion product
+];
+function renderGram(){
+  const wrap = document.getElementById('gramRow');
+  const picks = [
+    PRODUCTS.find(p=>p.category==='Sunglasses'),
+    PRODUCTS.find(p=>p.category==='Bags'),
+    LOOK_HAT,
+    PRODUCTS.filter(p=>p.category==='Shoes')[0],
+    PRODUCTS.find(p=>p.category==='Fashion')
+  ];
+  wrap.innerHTML = picks.map((p,i)=>`
+    <div class="col-6 col-lg">
+      <img src="${GRAM_IMAGES[i]}" alt="${p?p.name:'Shop gram image '+(i+1)}" class="w-100 rounded" style="aspect-ratio:1/1;object-fit:cover;cursor:pointer;" onclick="openQuickView(${p?p.id:'null'})">
+    </div>`).join('');
+}
+function toggleSearch(){
+  document.getElementById('searchBar').classList.toggle('d-none');
+  document.getElementById('searchInput').focus();
+}
+function renderSearchResults(){
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  const box = document.getElementById('searchResults');
+  if(!q){ box.innerHTML=''; return; }
+  const results = PRODUCTS.filter(p=>p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)).slice(0,6);
+  box.innerHTML = results.length ? results.map(p=>`
+    <a href="#" class="d-flex align-items-center gap-3 py-2 border-bottom" onclick="openQuickView(${p.id});toggleSearch();return false;">
+      <img src="${p.img1}" alt="${p.name}" style="width:46px;height:56px;object-fit:cover;border-radius:4px;">
+      <div><div class="fw-medium">${p.name}</div><div class="small text-muted">${p.category} · $${p.price}</div></div>
+    </a>`).join('') : '<p class="text-muted">No products found.</p>';
+}
+function toggleMegaMobile(e,el){
+  if(window.innerWidth<992){
+    e.preventDefault();
+    el.parentElement.classList.toggle('open');
+  }
+}
+function scrollCats(dir){
+  document.getElementById('catRow').scrollBy({left:dir*300,behavior:'smooth'});
+}
+
+/* back to top */
+window.addEventListener('scroll',()=>{
+  document.getElementById('backTop').classList.toggle('show', window.scrollY>500);
+});
+
+/* =========================================================
+   INIT
+========================================================= */
+renderPills();
+renderProducts();
+renderCart();
+renderWishlist();
+renderReviews();
+renderMegaProducts();
+renderGram();
+renderLooks();
+</script>
+</body>
+</html>
